@@ -1,0 +1,27 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "fastify start app.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/cors": "11.2.0",
+    "@fastify/helmet": "13.0.2",
+    "@fastify/postgres": "6.0.2",
+    "@fastify/rate-limit": "10.3.0",
+    "better-auth": "catalog:",
+    "fastify": "5.8.5",
+    "fastify-cli": "8.0.0",
+    "pg": "8.20.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@acme/tsconfig": "workspace:*",
+    "@total-typescript/ts-reset": "catalog:",
+    "@types/node": "25.6.0",
+    "typescript": "catalog:"
+  }
+}
