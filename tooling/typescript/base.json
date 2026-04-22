@@ -9,6 +9,8 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strict": true
+    "strict": true,
+
+    "types": ["@total-typescript/ts-reset"]
   }
 }
