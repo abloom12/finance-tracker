@@ -9,10 +9,11 @@ import {
 } from 'better-auth/plugins';
 
 import { db } from '../drizzle/db';
+import { config } from '../env';
 
 export const auth = betterAuth({
   advanced: { database: { generateId: 'uuid' } },
-  baseURL: process.env.BETTER_AUTH_URL!,
+  baseURL: config.auth.baseUrl!,
   database: drizzleAdapter(db, { provider: 'pg' }),
   emailAndPassword: {
     enabled: true,
@@ -20,7 +21,10 @@ export const auth = betterAuth({
     maxPasswordLength: 128,
   },
   plugins: [admin(), haveIBeenPwned(), organization(), openAPI(), username()],
-  trustedOrigins: ['http://localhost:3000', 'http://localhost:5173'],
+  trustedOrigins: [
+    config.appOrigin || 'http://localhost:3000',
+    'http://localhost:5173',
+  ],
   session: { cookieCache: { enabled: true, maxAge: 60 * 5 } },
 });
 

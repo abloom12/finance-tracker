@@ -7,6 +7,7 @@ import { fromNodeHeaders } from 'better-auth/node';
 import Fastify from 'fastify';
 
 import type { AppRouter } from './trpc';
+import { config } from './env';
 import { auth } from './lib/auth';
 import { appRouter } from './trpc';
 import { createContext } from './trpc/context';
@@ -22,7 +23,7 @@ export const server = Fastify({
 });
 
 server.register(fastifyCors, {
-  origin: process.env.APP_ORIGIN! || 'http://localhost:3000',
+  origin: config.appOrigin || 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
@@ -50,7 +51,7 @@ server.route({
   handler: async (request, reply) => {
     try {
       // Construct request URL
-      const url = new URL(request.url, process.env.BETTER_AUTH_URL!);
+      const url = new URL(request.url, config.auth.baseUrl!);
 
       // Convert Fastify headers to standard Headers object
       const headers = fromNodeHeaders(request.headers);
@@ -79,7 +80,7 @@ server.route({
 });
 
 server.listen(
-  { port: Number(process.env.PORT) ?? 3000, host: '0.0.0.0' },
+  { port: config.port ?? 3000, host: '0.0.0.0' },
   function (err, address) {
     if (err) {
       server.log.error(err);
