@@ -24,7 +24,7 @@ export const config = {
   corsOrigin: env.CORS_ORIGIN.split(',')
     .map((s: string) => s.trim())
     .filter(Boolean),
-  databaseURL: env.DATABASE_URL,
+  database: { url: env.DATABASE_URL },
   isProd: env.NODE_ENV === 'production',
   port: env.PORT,
 } as const;
