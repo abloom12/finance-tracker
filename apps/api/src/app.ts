@@ -1,41 +1,38 @@
-import type { FastifyTRPCPluginOptions } from "@trpc/server/adapters/fastify";
-import fastifyCors from "@fastify/cors";
-import fastifyHelmet from "@fastify/helmet";
-import fastifyRateLimit from "@fastify/rate-limit";
-import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
-import { fromNodeHeaders } from "better-auth/node";
-import Fastify from "fastify";
+import type { FastifyTRPCPluginOptions } from '@trpc/server/adapters/fastify';
+import fastifyCors from '@fastify/cors';
+import fastifyHelmet from '@fastify/helmet';
+import fastifyRateLimit from '@fastify/rate-limit';
+import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify';
+import { fromNodeHeaders } from 'better-auth/node';
+import Fastify from 'fastify';
 
-import type { AppRouter } from "./trpc";
-import { auth } from "./lib/auth";
-import { appRouter } from "./trpc";
-import { createContext } from "./trpc/context";
-
-const a = { "a": 1, "ash-two": 2 };
-console.log("hello world");
+import type { AppRouter } from './trpc';
+import { auth } from './lib/auth';
+import { appRouter } from './trpc';
+import { createContext } from './trpc/context';
 
 export const server = Fastify({
   logger: {
     transport: {
-      target: "pino-pretty",
-      options: { translateTime: "HH:MM:ss Z", ignore: "pid,hostname" },
+      target: 'pino-pretty',
+      options: { translateTime: 'HH:MM:ss Z', ignore: 'pid,hostname' },
     },
   },
   routerOptions: { maxParamLength: 5000 },
 });
 
 server.register(fastifyCors, {
-  origin: process.env.APP_ORIGIN! || "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  origin: process.env.APP_ORIGIN! || 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
   maxAge: 86400,
 });
 server.register(fastifyHelmet);
-server.register(fastifyRateLimit, { max: 100, timeWindow: "1 minute" });
+server.register(fastifyRateLimit, { max: 100, timeWindow: '1 minute' });
 
 server.register(fastifyTRPCPlugin, {
-  prefix: "/trpc",
+  prefix: '/trpc',
   trpcOptions: {
     router: appRouter,
     createContext,
@@ -44,12 +41,12 @@ server.register(fastifyTRPCPlugin, {
         `Error in tRPC handler on path '${path}':${error.message}`,
       );
     },
-  } satisfies FastifyTRPCPluginOptions<AppRouter>["trpcOptions"],
+  } satisfies FastifyTRPCPluginOptions<AppRouter>['trpcOptions'],
 });
 
 server.route({
-  method: ["GET", "POST"],
-  url: "/api/auth/*",
+  method: ['GET', 'POST'],
+  url: '/api/auth/*',
   handler: async (request, reply) => {
     try {
       // Construct request URL
@@ -76,13 +73,13 @@ server.route({
       server.log.error(`Authentication Error: ${error}`);
       return reply
         .status(500)
-        .send({ error: "Internal authentication error", code: "AUTH_FAILURE" });
+        .send({ error: 'Internal authentication error', code: 'AUTH_FAILURE' });
     }
   },
 });
 
 server.listen(
-  { port: Number(process.env.PORT) ?? 3000, host: "0.0.0.0" },
+  { port: Number(process.env.PORT) ?? 3000, host: '0.0.0.0' },
   function (err, address) {
     if (err) {
       server.log.error(err);

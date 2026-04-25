@@ -1,5 +1,6 @@
-import { type CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
-import { auth } from "../lib/auth";
+import { type CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
+
+import { auth } from '../lib/auth';
 
 export async function createContext({ req, res }: CreateFastifyContextOptions) {
   const session = await auth.api.getSession({ headers: req.headers });

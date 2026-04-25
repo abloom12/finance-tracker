@@ -1,38 +1,27 @@
-import { betterAuth } from "better-auth";
+import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import {
   admin,
   haveIBeenPwned,
   openAPI,
   organization,
   username,
-} from "better-auth/plugins";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
+} from 'better-auth/plugins';
 
-import { db } from "../db";
+import { db } from '../drizzle/db';
 
 export const auth = betterAuth({
-  advanced: {
-    database: {
-      generateId: "uuid",
-    },
-  },
+  advanced: { database: { generateId: 'uuid' } },
   baseURL: process.env.BETTER_AUTH_URL!,
-  database: drizzleAdapter(db, {
-    provider: "pg",
-  }),
+  database: drizzleAdapter(db, { provider: 'pg' }),
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
     maxPasswordLength: 128,
   },
   plugins: [admin(), haveIBeenPwned(), organization(), openAPI(), username()],
-  trustedOrigins: ["http://localhost:3000", "http://localhost:5173"],
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60,
-    },
-  },
+  trustedOrigins: ['http://localhost:3000', 'http://localhost:5173'],
+  session: { cookieCache: { enabled: true, maxAge: 60 * 5 } },
 });
 
 export type Session = typeof auth.$Infer.Session.session;
