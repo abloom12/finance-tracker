@@ -1,17 +1,12 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import {
-  admin,
-  haveIBeenPwned,
-  openAPI,
-  organization,
-  username,
-} from 'better-auth/plugins';
+import { admin, openAPI, organization } from 'better-auth/plugins';
 
 import { db } from '../drizzle/db';
 import { config } from '../env';
 
 export const auth = betterAuth({
+  appName: 'API',
   advanced: { database: { generateId: 'uuid' } },
   baseURL: config.auth.baseUrl!,
   database: drizzleAdapter(db, { provider: 'pg' }),
@@ -20,7 +15,7 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 128,
   },
-  plugins: [admin(), haveIBeenPwned(), organization(), openAPI(), username()],
+  plugins: [admin(), organization(), openAPI()],
   trustedOrigins: [
     config.appOrigin || 'http://localhost:3000',
     'http://localhost:5173',
