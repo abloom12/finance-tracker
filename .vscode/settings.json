@@ -8,6 +8,7 @@
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true
   },
+  "git.openRepositoryInParentFolders": "always",
   "search.exclude": {
     "**/routeTree.gen.ts": true
   },
