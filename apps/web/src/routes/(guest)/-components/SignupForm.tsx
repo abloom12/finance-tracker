@@ -69,15 +69,15 @@ export function SignupForm() {
       const { data, error } = await authClient.signUp.email(
         { ...reqBody, callbackURL: '/' },
         {
-          onRequest: (ctx) => {
-            // show loading
-          },
-          onSuccess: (ctx) => {
-            // redirect to to dashboard or sign in page
-          },
-          onError: (ctx) => {
-            // show error message
-          },
+          // onRequest: (ctx) => {
+          //   // show loading
+          // },
+          // onSuccess: (ctx) => {
+          //   // redirect to to dashboard or sign in page
+          // },
+          // onError: (ctx) => {
+          //   // show error message
+          // },
         },
       );
 
