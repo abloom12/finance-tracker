@@ -2,29 +2,24 @@ import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
 import { Field, FieldDescription, FieldError } from '../ui/Field';
-import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
+import { Textarea } from '../ui/Textarea';
 
-type InputType =
-  | 'text'
-  | 'email'
-  | 'password'
-  | 'date'
-  | 'time'
-  | 'tel'
-  | 'url'
-  | 'search';
-
-function InputField({
-  type = 'text',
-  label,
-  description,
-}: {
-  type?: InputType;
+type TextareaProps = {
   label: string;
+  placeholder?: string;
+  rows?: number;
   description?: string;
-}) {
+};
+
+function TextareaField({
+  label,
+  placeholder,
+  rows,
+  description,
+}: TextareaProps) {
   const field = useFieldContext<string>();
+
   const { errors, isTouched } = useStore(field.store, (state) => state.meta);
 
   const descriptionId = `${field.name}-description`;
@@ -38,10 +33,11 @@ function InputField({
   return (
     <Field>
       <Label htmlFor={field.name}>{label}</Label>
-      <Input
-        type={type}
+      <Textarea
         id={field.name}
         value={field.state.value}
+        placeholder={placeholder}
+        rows={rows}
         aria-invalid={hasErrors}
         aria-describedby={describedBy}
         onChange={(e) => field.handleChange(e.target.value)}
@@ -55,4 +51,4 @@ function InputField({
   );
 }
 
-export { InputField };
+export { TextareaField };

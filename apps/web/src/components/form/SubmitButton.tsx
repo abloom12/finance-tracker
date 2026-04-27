@@ -1,7 +1,7 @@
 import { useFormContext } from '@/hooks/form';
 
-import { Button } from '../shadcn/button';
-import { Spinner } from '../shadcn/spinner';
+import { Button } from '../ui/Button';
+import { Spinner } from '../ui/Spinner';
 
 function SubmitButton({
   label,
