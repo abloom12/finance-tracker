@@ -1,9 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/(app)/')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute('/(app)/')({ component: RouteComponent });
 
 function RouteComponent() {
-  return <div>Hello "/(app)/"!</div>
+  return (
+    <div>
+      <div className='flex gap-2 p-2'>
+        <Link to='/' className='[&.active]:font-bold'>
+          Home
+        </Link>
+      </div>
+    </div>
+  );
 }
