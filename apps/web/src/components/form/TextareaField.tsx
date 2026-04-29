@@ -1,8 +1,7 @@
 import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
-import { Field, FieldDescription, FieldError } from '../ui/Field';
-import { Label } from '../ui/Label';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/Field';
 import { Textarea } from '../ui/Textarea';
 
 type TextareaProps = {
@@ -32,7 +31,7 @@ function TextareaField({
 
   return (
     <Field>
-      <Label htmlFor={field.name}>{label}</Label>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <Textarea
         id={field.name}
         value={field.state.value}

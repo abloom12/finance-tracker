@@ -1,9 +1,8 @@
 import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
-import { Field, FieldDescription, FieldError } from '../ui/Field';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/Field';
 import { Input } from '../ui/Input';
-import { Label } from '../ui/Label';
 
 type InputType =
   | 'text'
@@ -37,7 +36,7 @@ function InputField({
 
   return (
     <Field>
-      <Label htmlFor={field.name}>{label}</Label>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <Input
         type={type}
         id={field.name}

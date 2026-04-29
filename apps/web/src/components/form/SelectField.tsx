@@ -1,8 +1,7 @@
 import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
-import { Field, FieldDescription, FieldError } from '../ui/Field';
-import { Label } from '../ui/Label';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/Field';
 import { Select, SelectOption } from '../ui/Select';
 
 type SelectFieldProps = {
@@ -32,7 +31,7 @@ function SelectField({
 
   return (
     <Field>
-      <Label htmlFor={field.name}>{label}</Label>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <Select
         id={field.name}
         value={field.state.value}
@@ -42,7 +41,7 @@ function SelectField({
         onBlur={field.handleBlur}
       >
         {placeholder && (
-          <SelectOption value='' aria-hidden='true' disabled>
+          <SelectOption value="" aria-hidden="true" disabled>
             {placeholder}
           </SelectOption>
         )}

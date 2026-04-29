@@ -2,8 +2,7 @@ import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
 import { Checkbox } from '../ui/Checkbox';
-import { Field, FieldDescription, FieldError } from '../ui/Field';
-import { Label } from '../ui/Label';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/Field';
 
 type CheckboxFieldProps = { label: string; description?: string };
 
@@ -21,7 +20,7 @@ function CheckboxField({ label, description }: CheckboxFieldProps) {
     undefined;
 
   return (
-    <Field orientation='horizontal'>
+    <Field orientation="horizontal">
       <Checkbox
         id={field.name}
         checked={field.state.value}
@@ -30,7 +29,7 @@ function CheckboxField({ label, description }: CheckboxFieldProps) {
         onCheckedChange={(checked) => field.handleChange(checked === true)}
         onBlur={field.handleBlur}
       />
-      <Label htmlFor={field.name}>{label}</Label>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       {description && (
         <FieldDescription id={descriptionId}>{description}</FieldDescription>
       )}

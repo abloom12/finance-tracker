@@ -8,7 +8,7 @@ export const Route = createFileRoute('/(guest)/signup')({
 
 function RouteComponent() {
   return (
-    <div>
+    <div className="w-full max-w-xs">
       <SignupForm />
     </div>
   );

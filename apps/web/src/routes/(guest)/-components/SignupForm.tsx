@@ -1,9 +1,57 @@
 import { Field, FieldGroup } from '@/components/ui/Field';
 import { useAppForm } from '@/hooks/form';
 import { authClient } from '@/lib/auth-client';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
-import type { SignupSchema } from '../-schemas/signup';
-import { signupSchema } from '../-schemas/signup';
+const passwordSchema = z
+  .string()
+  .min(1, 'Password is required')
+  .refine(
+    (password) => {
+      if (!password) return true;
+
+      const lengthOk = password.length >= 8 && password.length <= 128;
+      const noSpaces = /^\S+$/.test(password);
+      const hasUpper = /[A-Z]/.test(password);
+      const hasLower = /[a-z]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+      const hasSpecial = /[^A-Za-z0-9]/.test(password);
+
+      return (
+        lengthOk && noSpaces && hasUpper && hasLower && hasNumber && hasSpecial
+      );
+    },
+    {
+      message:
+        'Password must be at least 8 characters, include upper and lower case letters, a number, a special character, and contain no spaces.',
+    },
+  );
+
+const signupSchema = z
+  .object({
+    name: z.string().min(1, 'Name is required'),
+    email: z
+      .string()
+      .trim()
+      .min(1, 'Email is required')
+      .refine((v) => (v ? z.email().safeParse(v).success : true), {
+        message: 'Invalid email address',
+      }),
+    password: passwordSchema,
+    confirm: z.string(),
+    image: z.string().optional(),
+  })
+  .refine(({ password, confirm }) => !password || !!confirm, {
+    message: 'Please confirm your password.',
+    path: ['confirm'],
+  })
+  .refine(
+    ({ password, confirm }) => !password || !confirm || password === confirm,
+    { message: 'Passwords do not match', path: ['confirm'] },
+  );
+
+type SignupSchema = z.infer<typeof signupSchema>;
 
 export function SignupForm() {
   const form = useAppForm({
@@ -26,12 +74,13 @@ export function SignupForm() {
           // onRequest: (ctx) => {
           //   // show loading
           // },
-          // onSuccess: (ctx) => {
-          //   // redirect to to dashboard or sign in page
-          // },
-          // onError: (ctx) => {
-          //   // show error message
-          // },
+          onSuccess: () => {
+            toast.success('yay!');
+          },
+          onError: () => {
+            // show error message
+            toast.error('uh oh');
+          },
         },
       );
 
@@ -49,29 +98,29 @@ export function SignupForm() {
     >
       <FieldGroup>
         <form.AppField
-          name='name'
-          children={(field) => <field.InputField label='name' />}
+          name="name"
+          children={(field) => <field.InputField label="name" />}
         />
         <form.AppField
-          name='email'
-          children={(field) => <field.InputField label='email' type='email' />}
+          name="email"
+          children={(field) => <field.InputField label="email" type="email" />}
         />
         <form.AppField
-          name='password'
+          name="password"
           children={(field) => (
-            <field.InputField label='password' type='password' />
+            <field.InputField label="password" type="password" />
           )}
         />
         <form.AppField
-          name='confirm'
+          name="confirm"
           children={(field) => (
-            <field.InputField label='confirm password' type='password' />
+            <field.InputField label="confirm password" type="password" />
           )}
         />
 
         <form.AppForm>
           <Field>
-            <form.SubmitButton label='submit' />
+            <form.SubmitButton label="submit" />
           </Field>
         </form.AppForm>
       </FieldGroup>
