@@ -1,23 +1,35 @@
-import type { Session } from '@/lib/auth-client';
 import { createRouter } from '@tanstack/react-router';
 
+import type { Session, User } from './auth-client';
 import { routeTree } from '../routeTree.gen.ts';
+import { queryClient } from './query-client';
+import { trpc } from './trpc.ts';
+
+export type RouterContext = {
+  auth: {
+    session: Session | null;
+    user: User | null;
+    isPending: boolean;
+    refetchSession: () => void | Promise<unknown>;
+  };
+  queryClient: typeof queryClient;
+  trpc: typeof trpc;
+};
 
 export const router = createRouter({
   routeTree,
   scrollRestoration: true,
   context: {
-    auth: { session: null, isPending: true, refetchSession: () => {} },
-  },
+    auth: {
+      session: null,
+      user: null,
+      isPending: true,
+      refetchSession: () => {},
+    },
+    queryClient,
+    trpc,
+  } satisfies RouterContext,
 });
-
-export type RouterContext = {
-  auth: {
-    session: Session | null;
-    isPending: boolean;
-    refetchSession: () => void | Promise<unknown>;
-  };
-};
 
 declare module '@tanstack/react-router' {
   interface Register {
