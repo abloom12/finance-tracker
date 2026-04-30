@@ -9,87 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as appIndexRouteImport } from './routes/(app)/index'
-import { Route as guestSignupRouteImport } from './routes/(guest)/signup'
-import { Route as guestLoginRouteImport } from './routes/(guest)/login'
 
-const appIndexRoute = appIndexRouteImport.update({
-  id: '/(app)/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const guestSignupRoute = guestSignupRouteImport.update({
-  id: '/(guest)/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const guestLoginRoute = guestLoginRouteImport.update({
-  id: '/(guest)/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
-export interface FileRoutesByFullPath {
-  '/login': typeof guestLoginRoute
-  '/signup': typeof guestSignupRoute
-  '/': typeof appIndexRoute
-}
-export interface FileRoutesByTo {
-  '/login': typeof guestLoginRoute
-  '/signup': typeof guestSignupRoute
-  '/': typeof appIndexRoute
-}
+export interface FileRoutesByFullPath {}
+export interface FileRoutesByTo {}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(guest)/login': typeof guestLoginRoute
-  '/(guest)/signup': typeof guestSignupRoute
-  '/(app)/': typeof appIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/signup' | '/'
+  fullPaths: never
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/'
-  id: '__root__' | '/(guest)/login' | '/(guest)/signup' | '/(app)/'
+  to: never
+  id: '__root__'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {
-  guestLoginRoute: typeof guestLoginRoute
-  guestSignupRoute: typeof guestSignupRoute
-  appIndexRoute: typeof appIndexRoute
-}
+export interface RootRouteChildren {}
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/(app)/': {
-      id: '/(app)/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof appIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(guest)/signup': {
-      id: '/(guest)/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof guestSignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(guest)/login': {
-      id: '/(guest)/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof guestLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-  }
+  interface FileRoutesByPath {}
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  guestLoginRoute: guestLoginRoute,
-  guestSignupRoute: guestSignupRoute,
-  appIndexRoute: appIndexRoute,
-}
+const rootRouteChildren: RootRouteChildren = {}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
