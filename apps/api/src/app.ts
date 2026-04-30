@@ -23,9 +23,9 @@ export const server = Fastify({
 });
 
 server.register(fastifyCors, {
-  origin: config.appOrigin || 'http://localhost:3000',
+  origin: config.appOrigin,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  allowedHeaders: ['Content-Type', 'X-Requested-With'],
   credentials: true,
   maxAge: 86400,
 });

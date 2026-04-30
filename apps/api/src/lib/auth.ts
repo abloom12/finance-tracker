@@ -16,10 +16,7 @@ export const auth = betterAuth({
     maxPasswordLength: 128,
   },
   plugins: [admin(), organization(), openAPI()],
-  trustedOrigins: [
-    config.appOrigin || 'http://localhost:3000',
-    'http://localhost:5173',
-  ],
+  trustedOrigins: [config.appOrigin],
   session: { cookieCache: { enabled: true, maxAge: 60 * 5 } },
 });
 
