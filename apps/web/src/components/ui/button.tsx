@@ -1,5 +1,4 @@
 import type { VariantProps } from 'class-variance-authority';
-import { github } from 'better-auth';
 import { cva } from 'class-variance-authority';
 
 import { cn } from '@/lib/cn';
