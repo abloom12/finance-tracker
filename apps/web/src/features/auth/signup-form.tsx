@@ -1,6 +1,6 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 
-import { Field, FieldGroup } from '@/components/ui/field-t';
+import { Field, FieldGroup } from '@/components/ui/field';
 import { useAppForm } from '@/hooks/form';
 import { authClient } from '@/lib/auth-client';
 import type { SignupSchema } from './schemas';
@@ -27,13 +27,13 @@ export function SignupForm() {
           // onRequest: (ctx) => {
           //   // show loading
           // },
-          onSuccess: () => {
-            toast.success('yay!');
-          },
-          onError: () => {
-            // show error message
-            toast.error('uh oh');
-          },
+          // onSuccess: () => {
+          //   toast.success('yay!');
+          // },
+          // onError: () => {
+          //   // show error message
+          //   toast.error('uh oh');
+          // },
         },
       );
 
