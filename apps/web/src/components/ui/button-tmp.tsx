@@ -1,6 +1,8 @@
 import type { VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/cn';
+import { github } from 'better-auth';
 import { cva } from 'class-variance-authority';
+
+import { cn } from '@/lib/cn';
 
 const buttonVariants = cva(
   [
@@ -81,5 +83,3 @@ function Button({
 }
 
 export { Button };
-
-(',');

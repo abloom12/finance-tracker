@@ -1,24 +1,29 @@
-import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
-import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/Field';
-import { Select, SelectOption } from '../ui/Select';
+import { useFieldContext } from '@/hooks/form';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field-t';
+import { Input } from '../ui/input-t';
 
-type SelectFieldProps = {
-  label: string;
-  options: Array<{ value: string; label: string }>;
-  placeholder?: string;
-  description?: string;
-};
+type InputType =
+  | 'text'
+  | 'email'
+  | 'password'
+  | 'date'
+  | 'time'
+  | 'tel'
+  | 'url'
+  | 'search';
 
-function SelectField({
+function InputField({
+  type = 'text',
   label,
-  options,
-  placeholder,
   description,
-}: SelectFieldProps) {
+}: {
+  type?: InputType;
+  label: string;
+  description?: string;
+}) {
   const field = useFieldContext<string>();
-
   const { errors, isTouched } = useStore(field.store, (state) => state.meta);
 
   const descriptionId = `${field.name}-description`;
@@ -32,25 +37,15 @@ function SelectField({
   return (
     <Field>
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-      <Select
+      <Input
+        type={type}
         id={field.name}
         value={field.state.value}
         aria-invalid={hasErrors}
         aria-describedby={describedBy}
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
-      >
-        {placeholder && (
-          <SelectOption value="" aria-hidden="true" disabled>
-            {placeholder}
-          </SelectOption>
-        )}
-        {options.map((option) => (
-          <SelectOption key={option.value} value={option.value}>
-            {option.label}
-          </SelectOption>
-        ))}
-      </Select>
+      />
       {description && (
         <FieldDescription id={descriptionId}>{description}</FieldDescription>
       )}
@@ -59,4 +54,4 @@ function SelectField({
   );
 }
 
-export { SelectField };
+export { InputField };

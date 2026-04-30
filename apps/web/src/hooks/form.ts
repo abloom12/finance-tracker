@@ -1,9 +1,10 @@
-import { CheckboxField } from '@/components/form/CheckboxField';
-import { InputField } from '@/components/form/InputField';
-import { SelectField } from '@/components/form/SelectField';
-import { SubmitButton } from '@/components/form/SubmitButton';
-import { TextareaField } from '@/components/form/TextareaField';
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
+
+import { CheckboxField } from '@/components/form/checkbox-field';
+import { InputField } from '@/components/form/input-field';
+import { SelectField } from '@/components/form/select-field';
+import { SubmitButton } from '@/components/form/submit-button';
+import { TextareaField } from '@/components/form/textarea-field';
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts();

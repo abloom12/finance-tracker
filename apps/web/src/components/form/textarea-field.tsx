@@ -1,13 +1,23 @@
-import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
-import { Checkbox } from '../ui/Checkbox';
-import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/Field';
+import { useFieldContext } from '@/hooks/form';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field-t';
+import { Textarea } from '../ui/textarea-t';
 
-type CheckboxFieldProps = { label: string; description?: string };
+type TextareaProps = {
+  label: string;
+  placeholder?: string;
+  rows?: number;
+  description?: string;
+};
 
-function CheckboxField({ label, description }: CheckboxFieldProps) {
-  const field = useFieldContext<boolean>();
+function TextareaField({
+  label,
+  placeholder,
+  rows,
+  description,
+}: TextareaProps) {
+  const field = useFieldContext<string>();
 
   const { errors, isTouched } = useStore(field.store, (state) => state.meta);
 
@@ -20,16 +30,18 @@ function CheckboxField({ label, description }: CheckboxFieldProps) {
     undefined;
 
   return (
-    <Field orientation="horizontal">
-      <Checkbox
+    <Field>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <Textarea
         id={field.name}
-        checked={field.state.value}
+        value={field.state.value}
+        placeholder={placeholder}
+        rows={rows}
         aria-invalid={hasErrors}
         aria-describedby={describedBy}
-        onCheckedChange={(checked) => field.handleChange(checked === true)}
+        onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
       />
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       {description && (
         <FieldDescription id={descriptionId}>{description}</FieldDescription>
       )}
@@ -38,4 +50,4 @@ function CheckboxField({ label, description }: CheckboxFieldProps) {
   );
 }
 
-export { CheckboxField };
+export { TextareaField };

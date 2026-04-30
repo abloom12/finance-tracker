@@ -1,29 +1,24 @@
-import { useFieldContext } from '@/hooks/form';
 import { useStore } from '@tanstack/react-form';
 
-import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/Field';
-import { Input } from '../ui/Input';
+import { useFieldContext } from '@/hooks/form';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field-t';
+import { Select, SelectOption } from '../ui/Select';
 
-type InputType =
-  | 'text'
-  | 'email'
-  | 'password'
-  | 'date'
-  | 'time'
-  | 'tel'
-  | 'url'
-  | 'search';
-
-function InputField({
-  type = 'text',
-  label,
-  description,
-}: {
-  type?: InputType;
+type SelectFieldProps = {
   label: string;
+  options: Array<{ value: string; label: string }>;
+  placeholder?: string;
   description?: string;
-}) {
+};
+
+function SelectField({
+  label,
+  options,
+  placeholder,
+  description,
+}: SelectFieldProps) {
   const field = useFieldContext<string>();
+
   const { errors, isTouched } = useStore(field.store, (state) => state.meta);
 
   const descriptionId = `${field.name}-description`;
@@ -37,15 +32,25 @@ function InputField({
   return (
     <Field>
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-      <Input
-        type={type}
+      <Select
         id={field.name}
         value={field.state.value}
         aria-invalid={hasErrors}
         aria-describedby={describedBy}
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
-      />
+      >
+        {placeholder && (
+          <SelectOption value="" aria-hidden="true" disabled>
+            {placeholder}
+          </SelectOption>
+        )}
+        {options.map((option) => (
+          <SelectOption key={option.value} value={option.value}>
+            {option.label}
+          </SelectOption>
+        ))}
+      </Select>
       {description && (
         <FieldDescription id={descriptionId}>{description}</FieldDescription>
       )}
@@ -54,4 +59,4 @@ function InputField({
   );
 }
 
-export { InputField };
+export { SelectField };
