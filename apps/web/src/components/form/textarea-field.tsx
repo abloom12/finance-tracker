@@ -1,8 +1,8 @@
 import { useStore } from '@tanstack/react-form';
 
 import { useFieldContext } from '@/hooks/form';
-import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field-t';
-import { Textarea } from '../ui/textarea-t';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
+import { Textarea } from '../ui/textarea';
 
 type TextareaProps = {
   label: string;

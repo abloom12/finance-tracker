@@ -1,8 +1,8 @@
 import { useStore } from '@tanstack/react-form';
 
 import { useFieldContext } from '@/hooks/form';
-import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field-t';
-import { Input } from '../ui/input-t';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
+import { Input } from '../ui/input';
 
 type InputType =
   | 'text'

@@ -1,9 +1,9 @@
 import type { VariantProps } from 'class-variance-authority';
 import * as React from 'react';
-import { cn } from '@/lib/cn';
 import { cva } from 'class-variance-authority';
 
-import { Label } from './Label';
+import { cn } from '@/lib/cn';
+import { Label } from './label';
 
 const fieldVariants = cva(
   'group/field data-[invalid=true]:text-destructive flex w-full gap-2',

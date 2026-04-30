@@ -1,8 +1,8 @@
 import { useStore } from '@tanstack/react-form';
 
 import { useFieldContext } from '@/hooks/form';
-import { Checkbox } from '../ui/checkbox-t';
-import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field-t';
+import { Checkbox } from '../ui/checkbox';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
 
 type CheckboxFieldProps = { label: string; description?: string };
 

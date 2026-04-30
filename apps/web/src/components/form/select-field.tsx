@@ -1,8 +1,8 @@
 import { useStore } from '@tanstack/react-form';
 
 import { useFieldContext } from '@/hooks/form';
-import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field-t';
-import { Select, SelectOption } from '../ui/Select';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
+import { Select, SelectOption } from '../ui/select';
 
 type SelectFieldProps = {
   label: string;
