@@ -1,8 +1,13 @@
 {
-  "name": "api",
+  "name": "@acme/api",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "exports": {
+    "./trpc": {
+      "types": "./src/trpc/types.ts"
+    }
+  },
   "scripts": {
     "dev": "fastify start src/app.ts",
     "auth:generate": "pnpm dlx auth@latest generate --output ./src/drizzle/schemas/new-auth-schema.ts --yes",
