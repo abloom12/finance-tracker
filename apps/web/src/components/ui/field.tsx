@@ -121,13 +121,19 @@ function FieldError({
   children,
   errors,
   ...props
-}: React.ComponentProps<'div'> & { errors?: Array<string | undefined> }) {
+}: React.ComponentProps<'div'> & {
+  errors?: Array<{ message: string } | undefined>;
+}) {
   const content = React.useMemo(() => {
     if (children) return children;
-    if (!errors?.length) return null;
 
-    const uniqueErrors = [...new Set(errors.filter(Boolean))];
+    const uniqueErrors = Array.from(
+      new Set(
+        errors?.flatMap((error) => (error?.message ? [error.message] : [])),
+      ),
+    );
 
+    if (!uniqueErrors.length) return null;
     if (uniqueErrors.length === 1) return uniqueErrors[0];
 
     return (
