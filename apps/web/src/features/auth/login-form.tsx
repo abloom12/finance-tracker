@@ -1,27 +1,35 @@
+import { toast } from 'sonner';
+
+import { Field, FieldGroup } from '@/components/ui/field';
 import { useAppForm } from '@/hooks/form';
 import { authClient } from '@/lib/auth-client';
-import { z } from 'zod';
-
-const loginSchema = z.object({
-  email: z.email(),
-  password: z.string().min(8).max(128),
-  rememberMe: z.boolean().optional(),
-});
+import type { LoginSchema } from './schemas';
+import { loginSchema } from './schemas';
 
 export function LoginForm() {
   const form = useAppForm({
-    defaultValues: { email: '', password: '', rememberMe: false } as z.infer<
-      typeof loginSchema
-    >,
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    } as LoginSchema,
     validators: { onChange: loginSchema },
     onSubmit: async ({ value }) => {
-      // TODO: handle errors
-      const { error } = await authClient.signIn.email({
-        ...value,
-        callbackURL: '/',
-      });
-      if (error) {
-        // Set form-level error to display to user
+      try {
+        await authClient.signIn.email(
+          { ...value, callbackURL: '/' },
+          {
+            onSuccess: () => {
+              toast.success('yay!');
+            },
+            onError: () => {
+              // show error message
+              toast.error('uh oh');
+            },
+          },
+        );
+      } catch (error) {
+        toast.error('error');
       }
     },
   });
@@ -34,19 +42,21 @@ export function LoginForm() {
         void form.handleSubmit();
       }}
     >
-      <form.AppField
-        name='email'
-        children={(field) => <field.InputField label='email' />}
-      />
-      <form.AppField
-        name='password'
-        children={(field) => (
-          <field.InputField label='password' type='password' />
-        )}
-      />
-      <form.AppForm>
-        <form.SubmitButton label='submit' />
-      </form.AppForm>
+      <FieldGroup>
+        <form.AppField
+          name="email"
+          children={(field) => <field.InputField label="email" />}
+        />
+        <form.AppField
+          name="password"
+          children={(field) => <field.PasswordField label="password" />}
+        />
+        <form.AppForm>
+          <Field>
+            <form.SubmitButton label="submit" />
+          </Field>
+        </form.AppForm>
+      </FieldGroup>
     </form>
   );
 }

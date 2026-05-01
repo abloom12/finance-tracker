@@ -47,4 +47,11 @@ export const signupSchema = z
     { message: 'Passwords do not match', path: ['confirm'] },
   );
 
+export const loginSchema = z.object({
+  email: z.email(),
+  password: z.string().min(8).max(128),
+  rememberMe: z.boolean().optional(),
+});
+
 export type SignupSchema = z.infer<typeof signupSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>;

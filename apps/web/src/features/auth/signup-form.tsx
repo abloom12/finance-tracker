@@ -1,4 +1,4 @@
-// import { toast } from 'sonner';
+import { toast } from 'sonner';
 
 import { Field, FieldGroup } from '@/components/ui/field';
 import { useAppForm } from '@/hooks/form';
@@ -19,25 +19,25 @@ export function SignupForm() {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirm, ...reqBody } = value;
 
-      // const a = authClient.useSession();
-
-      const { data, error } = await authClient.signUp.email(
-        { ...reqBody, callbackURL: '/' },
-        {
-          // onRequest: (ctx) => {
-          //   // show loading
-          // },
-          // onSuccess: () => {
-          //   toast.success('yay!');
-          // },
-          // onError: () => {
-          //   // show error message
-          //   toast.error('uh oh');
-          // },
-        },
-      );
-
-      console.log({ data, error });
+      try {
+        await authClient.signUp.email(
+          { ...reqBody, callbackURL: '/' },
+          {
+            // onRequest: (ctx) => {
+            //   // show loading
+            // },
+            onSuccess: () => {
+              toast.success('yay!');
+            },
+            onError: () => {
+              // show error message
+              toast.error('uh oh');
+            },
+          },
+        );
+      } catch (error) {
+        toast.error('error');
+      }
     },
   });
 
@@ -60,15 +60,11 @@ export function SignupForm() {
         />
         <form.AppField
           name="password"
-          children={(field) => (
-            <field.InputField label="password" type="password" />
-          )}
+          children={(field) => <field.PasswordField label="password" />}
         />
         <form.AppField
           name="confirm"
-          children={(field) => (
-            <field.InputField label="confirm password" type="password" />
-          )}
+          children={(field) => <field.PasswordField label="confirm password" />}
         />
 
         <form.AppForm>
