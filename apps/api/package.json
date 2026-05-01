@@ -9,7 +9,10 @@
     }
   },
   "scripts": {
-    "dev": "fastify start src/app.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "dev:fastify": "fastify start -w -P src/app.ts",
     "auth:generate": "pnpm dlx auth@latest generate --output ./src/drizzle/schemas/new-auth-schema.ts --yes",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -42,7 +45,6 @@
     "drizzle-kit": "0.31.10",
     "pino-pretty": "13.1.3",
     "prettier": "catalog:",
-    "tsdown": "catalog:",
     "tsx": "4.21.0",
     "typescript": "catalog:"
   },

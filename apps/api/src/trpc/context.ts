@@ -1,7 +1,7 @@
 import { type CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import { fromNodeHeaders } from 'better-auth/node';
 
-import { auth } from '../lib/auth';
+import { auth } from '../lib/auth.js';
 
 export async function createContext({ req, res }: CreateFastifyContextOptions) {
   const session = await auth.api.getSession({

@@ -2,8 +2,8 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin, openAPI, organization } from 'better-auth/plugins';
 
-import { db } from '../drizzle/db';
-import { config } from '../env';
+import { db } from '../drizzle/db.js';
+import { config } from '../env.js';
 
 export const auth = betterAuth({
   appName: 'API',

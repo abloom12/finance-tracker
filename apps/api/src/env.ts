@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import 'dotenv/config';
+
 const EnvSchema = z.object({
   APP_ORIGIN: z.url(),
   CORS_ORIGIN: z.string().min(1),
