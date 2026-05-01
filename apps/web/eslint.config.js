@@ -38,7 +38,7 @@ export default defineConfig([
           ],
         },
       ],
-      'react/no-children-prop': [true, { allowFunctions: true }],
+      'react/no-children-prop': ['error', { allowFunctions: true }],
     },
   },
 ]);
