@@ -13,6 +13,8 @@ const EnvSchema = z.object({
   // auth
   BETTER_AUTH_SECRET: z.string().min(32),
   BETTER_AUTH_URL: z.url(),
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
 
   // database
   DATABASE_URL: z.string().min(1),
@@ -21,7 +23,12 @@ const EnvSchema = z.object({
 const env = EnvSchema.parse(process.env);
 
 export const config = {
-  auth: { baseUrl: env.BETTER_AUTH_URL, secret: env.BETTER_AUTH_SECRET },
+  auth: {
+    baseUrl: env.BETTER_AUTH_URL,
+    secret: env.BETTER_AUTH_SECRET,
+    googleClientId: env.GOOGLE_CLIENT_ID,
+    googleClientSecret: env.GOOGLE_CLIENT_SECRET,
+  },
   appOrigin: env.APP_ORIGIN,
   corsOrigin: env.CORS_ORIGIN.split(',')
     .map((s: string) => s.trim())

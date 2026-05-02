@@ -1,6 +1,12 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { admin, openAPI, organization } from 'better-auth/plugins';
+import {
+  admin,
+  haveIBeenPwned,
+  openAPI,
+  organization,
+  twoFactor,
+} from 'better-auth/plugins';
 
 import { db } from '../drizzle/db.js';
 import { config } from '../env.js';
@@ -15,7 +21,20 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 128,
   },
-  plugins: [admin(), organization(), openAPI()],
+  socialProviders: {
+    google: {
+      prompt: 'select_account',
+      clientId: config.auth.googleClientId,
+      clientSecret: config.auth.googleClientSecret,
+    },
+  },
+  plugins: [
+    admin(),
+    haveIBeenPwned({ enabled: config.isProd }),
+    organization(),
+    openAPI(),
+    twoFactor(),
+  ],
   trustedOrigins: [config.appOrigin],
   session: { cookieCache: { enabled: true, maxAge: 60 * 5 } },
 });
