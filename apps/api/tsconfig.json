@@ -7,6 +7,8 @@
     "module": "nodenext",
     "types": ["node"],
     "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
 
     /* Bundler mode */
     "verbatimModuleSyntax": true,
