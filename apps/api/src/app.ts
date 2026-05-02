@@ -60,6 +60,7 @@ export const app: FastifyPluginAsync = async (server) => {
 
         // Forward response to client
         reply.status(response.status);
+
         response.headers.forEach((value, key) => reply.header(key, value));
 
         return reply.send(response.body ? await response.text() : null);
