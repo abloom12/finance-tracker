@@ -23,14 +23,15 @@ export function SignupForm() {
         await authClient.signUp.email(
           { ...reqBody, callbackURL: '/' },
           {
-            // onRequest: (ctx) => {
-            //   // show loading
-            // },
+            // onRequest: (ctx) => {},
             onSuccess: () => {
               toast.success('yay!');
             },
             onError: () => {
-              // show error message
+              // {
+              //   "code": "PASSWORD_COMPROMISED",
+              //   "message": "The password you entered has been compromised. Please choose a different password."
+              // }
               toast.error('uh oh');
             },
           },
