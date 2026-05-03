@@ -2,24 +2,25 @@
   "name": "@acme/api",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./trpc": "./src/trpc/index.ts"
+   ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/auth": "workspace:*",
-    "@acme/db": "workspace:*",
     "@trpc/server": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
-    "@types/node": "catalog:",
+    "@total-typescript/ts-reset": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },

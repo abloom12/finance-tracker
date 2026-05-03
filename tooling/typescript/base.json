@@ -1,27 +1,27 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "tsBuildInfoFile": "${configDir}/.cache/tsbuildinfo.json",
+    "target": "es2023",
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
 
     "incremental": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-    "target": "es2023",
-    "verbatimModuleSyntax": true,
+    "disableSourceOfProjectReferenceRedirect": true,
+    "tsBuildInfoFile": "${configDir}/.cache/tsbuildinfo.json",
 
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "erasableSyntaxOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strict": true,
-
-    "types": ["@total-typescript/ts-reset"]
-  }
+    "strict": true
+  },
+  "exclude": ["node_modules", "build", "dist", ".expo"]
 }

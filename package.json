@@ -8,7 +8,8 @@
   "packageManager": "pnpm@10.33.0",
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --filter=@acme/api --filter=@acme/web",
+    "dev": "turbo watch dev --filter=@acme/web --filter=@acme/server",
+    "dev:server": "turbo watch dev --filter=@acme/server",
     "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
     "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
@@ -17,10 +18,10 @@
     "db:up": "docker compose up -d db",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f db",
-    "db:generate": "turbo run db:generate --filter=@acme/api",
-    "db:migrate": "turbo run db:migrate --filter=@acme/api",
-    "db:push": "turbo run db:push --filter=@acme/api",
-    "db:studio": "turbo run db:studio --filter=@acme/api"
+    "db:generate": "turbo run db:generate --filter=@acme/db",
+    "db:migrate": "turbo run db:migrate --filter=@acme/db",
+    "db:push": "turbo run db:push --filter=@acme/db",
+    "db:studio": "turbo run db:studio --filter=@acme/db"
   },
   "devDependencies": {
     "turbo": "2.9.7",

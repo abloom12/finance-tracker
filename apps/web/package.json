@@ -7,9 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore",
     "lint": "eslint .",
-    "typecheck": "tsc -b --noEmit",
-    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@tailwindcss/vite": "4.2.4",
@@ -36,31 +36,26 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@acme/api": "workspace:*",
+    "@acme/eslint-config": "workspace:*",
     "@acme/prettier-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
-    "@total-typescript/ts-reset": "catalog:",
     "@babel/core": "7.29.0",
-    "@eslint/js": "9.39.4",
     "@rolldown/plugin-babel": "0.2.3",
     "@tanstack/eslint-plugin-query": "5.100.5",
     "@tanstack/eslint-plugin-router": "1.161.6",
     "@tanstack/router-plugin": "1.167.22",
+    "@total-typescript/ts-reset": "catalog:",
     "@types/babel__core": "7.20.5",
     "@types/node": "catalog:",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.1",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "9.39.4",
-    "eslint-plugin-react-hooks": "7.1.1",
-    "eslint-plugin-react-refresh": "0.5.2",
+    "eslint": "catalog:",
     "globals": "17.5.0",
     "prettier": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "8.58.2",
-    "vite": "8.0.9",
-    "vite-tsconfig-paths": "6.1.1"
+    "vite": "8.0.9"
   },
   "prettier": "@acme/prettier-config"
 }

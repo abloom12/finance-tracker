@@ -1,4 +1,0 @@
-{
-  "extends": "@acme/tsconfig/source-package.json",
-  "include": ["src"]
-}
