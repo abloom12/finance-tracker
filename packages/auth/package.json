@@ -1,0 +1,27 @@
+{
+  "name": "@acme/auth",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "auth": "pnpm dlx auth@latest generate --output ./src/drizzle/schemas/new-auth-schema.ts --yes",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore"
+  },
+  "dependencies": {
+    "@acme/db": "workspace:*",
+    "@better-auth/drizzle-adapter": "1.6.8",
+    "better-auth": "catalog:"
+  },
+  "devDependencies": {
+    "@acme/prettier-config": "workspace:*",
+    "@acme/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@acme/prettier-config"
+}

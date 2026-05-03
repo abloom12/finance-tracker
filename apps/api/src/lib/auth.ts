@@ -20,7 +20,9 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 8,
     maxPasswordLength: 128,
+    requireEmailVerification: true,
   },
+  emailVerification: {},
   socialProviders: {
     google: {
       prompt: 'select_account',
@@ -29,7 +31,7 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    admin(),
+    admin({ defaultRole: 'user' }),
     haveIBeenPwned({ enabled: config.isProd }),
     organization(),
     openAPI(),

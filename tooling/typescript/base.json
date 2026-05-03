@@ -1,8 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "tsBuildInfoFile": "${configDir}/.cache/tsbuildinfo.json",
+
+    "incremental": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "target": "es2023",
+    "verbatimModuleSyntax": true,
+
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
+    "erasableSyntaxOnly": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,

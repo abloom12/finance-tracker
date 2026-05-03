@@ -7,17 +7,23 @@
   },
   "packageManager": "pnpm@10.33.0",
   "scripts": {
-    "dev:web": "pnpm --filter @acme/web dev",
-    "dev:api": "pnpm --filter @acme/api dev",
+    "build": "turbo run build",
+    "dev": "turbo run dev --filter=@acme/api --filter=@acme/web",
+    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
+    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "typecheck": "turbo run typecheck",
     "db:up": "docker compose up -d db",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f db",
-    "db:generate": "pnpm --filter @acme/api db:generate",
-    "db:migrate": "pnpm --filter @acme/api db:migrate",
-    "db:push": "pnpm --filter @acme/api db:push",
-    "db:studio": "pnpm --filter @acme/api db:studio"
+    "db:generate": "turbo run db:generate --filter=@acme/api",
+    "db:migrate": "turbo run db:migrate --filter=@acme/api",
+    "db:push": "turbo run db:push --filter=@acme/api",
+    "db:studio": "turbo run db:studio --filter=@acme/api"
   },
   "devDependencies": {
+    "turbo": "2.9.7",
     "typescript": "catalog:"
   }
 }

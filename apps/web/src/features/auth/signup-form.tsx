@@ -20,7 +20,7 @@ export function SignupForm() {
       const { confirm, ...reqBody } = value;
 
       try {
-        await authClient.signUp.email(
+        const resp = await authClient.signUp.email(
           { ...reqBody, callbackURL: '/' },
           {
             // onRequest: (ctx) => {},

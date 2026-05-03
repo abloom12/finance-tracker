@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "preview": "vite preview",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "typecheck": "tsc -b --noEmit",
+    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore"
   },
   "dependencies": {
     "@tailwindcss/vite": "4.2.4",
@@ -37,6 +39,7 @@
     "@acme/api": "workspace:*",
     "@acme/prettier-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
+    "@total-typescript/ts-reset": "catalog:",
     "@babel/core": "7.29.0",
     "@eslint/js": "9.39.4",
     "@rolldown/plugin-babel": "0.2.3",

@@ -1,22 +1,16 @@
 {
   "extends": "@acme/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "es2023",
+    "tsBuildInfoFile": "${configDir}/.cache/tsconfig.node.tsbuildinfo",
+
     "lib": ["ES2023"],
     "module": "esnext",
-    "types": ["node"],
-    "skipLibCheck": true,
+    "types": ["@total-typescript/ts-reset", "node"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
-    "erasableSyntaxOnly": true
+    "noEmit": true
   },
   "include": ["vite.config.ts"]
 }

@@ -1,0 +1,4 @@
+{
+  "extends": "@acme/tsconfig/source-package.json",
+  "include": ["src", "drizzle.config.ts"]
+}
