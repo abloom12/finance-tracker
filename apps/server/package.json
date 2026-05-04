@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@acme/api": "workspace:*",
-    "@acme/auth": "workspace:*",
     "@acme/db": "workspace:*",
+    "@better-auth/drizzle-adapter": "1.6.8",
     "@fastify/cors": "11.2.0",
     "@fastify/helmet": "13.0.2",
     "@fastify/rate-limit": "10.3.0",
