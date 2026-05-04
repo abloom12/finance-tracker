@@ -2,7 +2,7 @@
   "name": "@acme/api",
   "type": "module",
   "exports": {
-   ".": {
+    ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@trpc/server": "catalog:",
+    "better-auth": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

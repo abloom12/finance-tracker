@@ -3,7 +3,8 @@ import { createRouter } from '@tanstack/react-router';
 import type { Session, User } from './auth-client';
 import { routeTree } from '../routeTree.gen.ts';
 import { queryClient } from './query-client';
-import { trpc } from './trpc.ts';
+
+// import { trpc } from './trpc.ts';
 
 export type RouterContext = {
   auth: {
@@ -13,7 +14,7 @@ export type RouterContext = {
     refetchSession: () => void | Promise<unknown>;
   };
   queryClient: typeof queryClient;
-  trpc: typeof trpc;
+  // trpc: typeof trpc;
 };
 
 export const router = createRouter({
@@ -27,7 +28,7 @@ export const router = createRouter({
       refetchSession: () => {},
     },
     queryClient,
-    trpc,
+    // trpc,
   } satisfies RouterContext,
 });
 

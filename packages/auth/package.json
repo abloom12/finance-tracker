@@ -17,7 +17,8 @@
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "1.6.8",
-    "better-auth": "catalog:"
+    "better-auth": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:*",
