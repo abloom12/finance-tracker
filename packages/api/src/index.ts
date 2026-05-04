@@ -1,19 +1,22 @@
+import type { Auth } from 'better-auth';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { type CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import { fromNodeHeaders } from 'better-auth/node';
 
-export function createApi(auth: any) {
-  async function createContext({ req, res }: CreateFastifyContextOptions) {
-    const session = await auth.api.getSession({
-      headers: fromNodeHeaders(req.headers),
-    });
+export type ApiSession = Auth['$Infer']['Session'] | null;
+export type ApiContext = {
+  req: CreateFastifyContextOptions['req'];
+  res: CreateFastifyContextOptions['res'];
+  session: ApiSession;
+};
+export type AppRouter = ReturnType<typeof createAppRouter>;
+export type Api = {
+  appRouter: AppRouter;
+  createContext: (options: CreateFastifyContextOptions) => Promise<ApiContext>;
+};
 
-    return { req, res, session };
-  }
-
-  type Context = Awaited<ReturnType<typeof createContext>>;
-
-  const t = initTRPC.context<Context>().create();
+function createAppRouter() {
+  const t = initTRPC.context<ApiContext>().create();
 
   const router = t.router;
   const publicProcedure = t.procedure;
@@ -33,10 +36,22 @@ export function createApi(auth: any) {
     me: protectedProcedure.query(({ ctx }) => ({ user: ctx.user })),
   });
 
-  const appRouter = router({ health: healthRouter });
+  return router({ health: healthRouter });
+}
+
+export function createApi(auth: Auth): Api {
+  async function createContext({
+    req,
+    res,
+  }: CreateFastifyContextOptions): Promise<ApiContext> {
+    const session = await auth.api.getSession({
+      headers: fromNodeHeaders(req.headers),
+    });
+
+    return { req, res, session };
+  }
+
+  const appRouter = createAppRouter();
 
   return { appRouter, createContext };
 }
-
-export type Api = ReturnType<typeof createApi>;
-export type AppRouter = Api['appRouter'];
