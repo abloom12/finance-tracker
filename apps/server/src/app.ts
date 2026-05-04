@@ -1,20 +1,25 @@
-// import type { FastifyTRPCPluginOptions } from '@trpc/server/adapters/fastify';
+import type { FastifyTRPCPluginOptions } from '@trpc/server/adapters/fastify';
 import type { FastifyPluginAsync } from 'fastify';
 import fastifyCors from '@fastify/cors';
 import fastifyHelmet from '@fastify/helmet';
 import fastifyRateLimit from '@fastify/rate-limit';
-// import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify';
+import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify';
 import { fromNodeHeaders } from 'better-auth/node';
 
-// import { createApi } from '@acme/api';
+import type { AppRouter } from '@acme/api';
+import { createApi } from '@acme/api';
 import { createDB } from '@acme/db';
 
 import { createAuth } from './auth.js';
 import { config } from './env.js';
 
+type TrpcOptions = FastifyTRPCPluginOptions<AppRouter>['trpcOptions'];
+type TrpcOnError = Parameters<NonNullable<TrpcOptions['onError']>>[0];
+
 export const app: FastifyPluginAsync = async (server) => {
   const db = createDB(config.database.url);
   const auth = createAuth(db);
+  const { appRouter, createContext } = createApi(auth);
 
   await server.register(fastifyCors, {
     origin: config.corsOrigin,
@@ -26,6 +31,19 @@ export const app: FastifyPluginAsync = async (server) => {
 
   await server.register(fastifyHelmet);
   await server.register(fastifyRateLimit, { max: 100, timeWindow: '1 minute' });
+
+  await server.register(fastifyTRPCPlugin, {
+    prefix: '/trpc',
+    trpcOptions: {
+      router: appRouter,
+      createContext,
+      onError({ path, error }: TrpcOnError) {
+        server.log.error(
+          `Error in tRPC handler on path '${path}':${error.message}`,
+        );
+      },
+    } satisfies TrpcOptions,
+  });
 
   server.route({
     method: ['GET', 'POST'],
