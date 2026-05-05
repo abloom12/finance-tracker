@@ -15,5 +15,10 @@
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "js/ts.tsdk.path": "node_modules/typescript/lib",
 
-  "workbench.editor.showTabs": "multiple"
+  "workbench.editor.showTabs": "multiple",
+
+  "files.exclude": {
+    "**/.turbo": true,
+    "**/.cache": true
+  }
 }
