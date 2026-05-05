@@ -1,6 +1,6 @@
 import { useStore } from '@tanstack/react-form';
 
-import { useFieldContext } from '@/hooks/form';
+import { useFieldContext } from '@/lib/form';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
 import { Select, SelectOption } from '../ui/select';
 

@@ -1,8 +1,8 @@
 import { toast } from 'sonner';
 
 import { Field, FieldGroup } from '@/components/ui/field';
-import { useAppForm } from '@/hooks/form';
 import { authClient } from '@/lib/auth-client';
+import { useAppForm } from '@/lib/form';
 import type { LoginSchema } from './schemas';
 import { loginSchema } from './schemas';
 

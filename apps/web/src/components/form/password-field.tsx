@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useStore } from '@tanstack/react-form';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
-import { useFieldContext } from '@/hooks/form';
+import { useFieldContext } from '@/lib/form';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
 import {
   InputGroup,
