@@ -16,8 +16,8 @@ async function main() {
 
   await server.register(app);
 
-  const close = async () => {
-    server.log.info('shutting down');
+  const close = async (signal: NodeJS.Signals) => {
+    server.log.info({ signal }, 'shutting down');
 
     try {
       await server.close();
@@ -28,12 +28,21 @@ async function main() {
     }
   };
 
-  process.once('SIGINT', close);
-  process.once('SIGTERM', close);
+  let isClosing = false;
+
+  const handleSignal = (signal: NodeJS.Signals) => {
+    if (isClosing) return;
+    isClosing = true;
+
+    void close(signal);
+  };
+
+  process.once('SIGINT', handleSignal);
+  process.once('SIGTERM', handleSignal);
 
   try {
     const address = await server.listen({
-      port: config.port ?? 3000,
+      port: config.port,
       host: '127.0.0.1',
     });
 
