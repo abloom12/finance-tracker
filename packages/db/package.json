@@ -23,12 +23,14 @@
     "pg": "8.20.0"
   },
   "devDependencies": {
+    "@acme/eslint-config": "workspace:*",
     "@acme/prettier-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
     "@total-typescript/ts-reset": "catalog:",
     "@types/node": "catalog:",
     "@types/pg": "8.20.0",
     "drizzle-kit": "0.31.10",
+    "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },

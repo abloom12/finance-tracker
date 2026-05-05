@@ -3,7 +3,7 @@ import pluginRouter from '@tanstack/eslint-plugin-router';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
-import { reactConfig } from '@acme/eslint-config';
+import { reactConfig } from '@acme/eslint-config/react';
 
 export default defineConfig(reactConfig, {
   files: ['**/*.{ts,tsx}'],
