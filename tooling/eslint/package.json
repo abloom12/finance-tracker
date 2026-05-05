@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./base": "./base.ts",
+    ".": "./base.ts",
     "./react": "./react.ts"
   },
   "scripts": {
