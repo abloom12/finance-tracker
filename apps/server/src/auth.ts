@@ -18,13 +18,13 @@ export function createAuth(db: AuthDb): AuthInstance {
   const authOptions: BetterAuthOptions = {
     appName: 'API',
     advanced: { database: { generateId: 'uuid' } },
-    baseURL: config.auth.baseUrl!,
+    baseURL: config.auth.baseUrl,
     database: drizzleAdapter(db, { provider: 'pg' }),
     emailAndPassword: {
       enabled: true,
       minPasswordLength: 8,
       maxPasswordLength: 128,
-      requireEmailVerification: true,
+      requireEmailVerification: false, // turn on once emailVerification is setup
     },
     emailVerification: {},
     socialProviders: {
