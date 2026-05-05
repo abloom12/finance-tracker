@@ -7,6 +7,7 @@ import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
 import {
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
 } from '../ui/input-group';
 
@@ -43,14 +44,16 @@ function PasswordField({
           onChange={(e) => field.handleChange(e.target.value)}
           onBlur={field.handleBlur}
         />
-        <InputGroupAddon
-          align="inline-end"
-          className="cursor-pointer"
-          onClick={() => setShowPassword((p) => !p)}
-        >
-          {showPassword ?
-            <EyeOffIcon />
-          : <EyeIcon />}
+        <InputGroupAddon align="inline-end" className="cursor-pointer">
+          <InputGroupButton
+            aria-label={showPassword ? 'show password' : 'hide password'}
+            size="icon-xs"
+            onClick={() => setShowPassword((p) => !p)}
+          >
+            {showPassword ?
+              <EyeOffIcon />
+            : <EyeIcon />}
+          </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
 
