@@ -1,6 +1,6 @@
 import type { Auth, BetterAuthOptions } from 'better-auth';
-import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { betterAuth } from 'better-auth/minimal';
 import {
   admin,
   haveIBeenPwned,
