@@ -23,7 +23,6 @@ export function SignupForm() {
         await authClient.signUp.email(
           { ...reqBody, callbackURL: '/' },
           {
-            // onRequest: (ctx) => {},
             onSuccess: () => {
               toast.success('yay!');
             },
@@ -37,7 +36,9 @@ export function SignupForm() {
           },
         );
       } catch (error) {
-        toast.error('error');
+        toast.error(
+          'There was an issue with the server, please try again later.',
+        );
       }
     },
   });

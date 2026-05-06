@@ -35,6 +35,9 @@
   html {
     @apply font-sans;
   }
+  #root {
+    @apply min-h-screen;
+  }
 }
 
 :root {
