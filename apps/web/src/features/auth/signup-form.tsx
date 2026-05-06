@@ -53,24 +53,24 @@ export function SignupForm() {
       <FieldGroup>
         <form.AppField
           name="name"
-          children={(field) => <field.InputField label="name" />}
+          children={(field) => <field.InputField label="Name" />}
         />
         <form.AppField
           name="email"
-          children={(field) => <field.InputField label="email" type="email" />}
+          children={(field) => <field.InputField label="Email" type="email" />}
         />
         <form.AppField
           name="password"
-          children={(field) => <field.PasswordField label="password" />}
+          children={(field) => <field.PasswordField label="Password" />}
         />
         <form.AppField
           name="confirm"
-          children={(field) => <field.PasswordField label="confirm password" />}
+          children={(field) => <field.PasswordField label="Confirm Password" />}
         />
 
         <form.AppForm>
           <Field>
-            <form.SubmitButton label="submit" />
+            <form.SubmitButton label="Create Account" />
           </Field>
         </form.AppForm>
       </FieldGroup>

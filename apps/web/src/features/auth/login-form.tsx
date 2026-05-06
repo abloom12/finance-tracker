@@ -45,15 +45,16 @@ export function LoginForm() {
       <FieldGroup>
         <form.AppField
           name="email"
-          children={(field) => <field.InputField label="email" />}
+          children={(field) => <field.InputField label="Email" />}
         />
         <form.AppField
           name="password"
-          children={(field) => <field.PasswordField label="password" />}
+          children={(field) => <field.PasswordField label="Password" />}
         />
+
         <form.AppForm>
           <Field>
-            <form.SubmitButton label="submit" />
+            <form.SubmitButton label="Login" />
           </Field>
         </form.AppForm>
       </FieldGroup>
