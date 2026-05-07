@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { cn } from '@/lib/cn';
 import { CheckIcon } from 'lucide-react';
 import { Checkbox as CheckboxPrimitive } from 'radix-ui';
 
-function Checkbox({
+import { cn } from '@/lib/cn';
+
+export function Checkbox({
   className,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
@@ -33,5 +34,3 @@ function Checkbox({
     </CheckboxPrimitive.Root>
   );
 }
-
-export { Checkbox };
