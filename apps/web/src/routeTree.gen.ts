@@ -11,8 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as AppRouteRouteImport } from './routes/_app/route'
-import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedSetupRouteImport } from './routes/_authenticated/setup'
+import { Route as AuthenticatedAppRouteRouteImport } from './routes/_authenticated/_app/route'
+import { Route as AuthenticatedSetupIndexRouteImport } from './routes/_authenticated/setup.index'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/_app/index'
+import { Route as AuthenticatedSetupIncomeRouteImport } from './routes/_authenticated/setup.income'
+import { Route as AuthenticatedSetupBillsRouteImport } from './routes/_authenticated/setup.bills'
+import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/_app/settings'
+import { Route as AuthenticatedAppGoalsRouteImport } from './routes/_authenticated/_app/goals'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -24,43 +31,126 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRouteRoute = AppRouteRouteImport.update({
-  id: '/_app',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
+const AuthenticatedSetupRoute = AuthenticatedSetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAppRouteRoute = AuthenticatedAppRouteRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSetupIndexRoute = AuthenticatedSetupIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AppRouteRoute,
+  getParentRoute: () => AuthenticatedSetupRoute,
+} as any)
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAppRouteRoute,
+} as any)
+const AuthenticatedSetupIncomeRoute =
+  AuthenticatedSetupIncomeRouteImport.update({
+    id: '/income',
+    path: '/income',
+    getParentRoute: () => AuthenticatedSetupRoute,
+  } as any)
+const AuthenticatedSetupBillsRoute = AuthenticatedSetupBillsRouteImport.update({
+  id: '/bills',
+  path: '/bills',
+  getParentRoute: () => AuthenticatedSetupRoute,
+} as any)
+const AuthenticatedAppSettingsRoute =
+  AuthenticatedAppSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAppRouteRoute,
+  } as any)
+const AuthenticatedAppGoalsRoute = AuthenticatedAppGoalsRouteImport.update({
+  id: '/goals',
+  path: '/goals',
+  getParentRoute: () => AuthenticatedAppRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AppIndexRoute
+  '/': typeof AuthenticatedAppIndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/setup': typeof AuthenticatedSetupRouteWithChildren
+  '/goals': typeof AuthenticatedAppGoalsRoute
+  '/settings': typeof AuthenticatedAppSettingsRoute
+  '/setup/bills': typeof AuthenticatedSetupBillsRoute
+  '/setup/income': typeof AuthenticatedSetupIncomeRoute
+  '/setup/': typeof AuthenticatedSetupIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof AuthenticatedAppIndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/': typeof AppIndexRoute
+  '/goals': typeof AuthenticatedAppGoalsRoute
+  '/settings': typeof AuthenticatedAppSettingsRoute
+  '/setup/bills': typeof AuthenticatedSetupBillsRoute
+  '/setup/income': typeof AuthenticatedSetupIncomeRoute
+  '/setup': typeof AuthenticatedSetupIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_app': typeof AppRouteRouteWithChildren
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/_app/': typeof AppIndexRoute
+  '/_authenticated/_app': typeof AuthenticatedAppRouteRouteWithChildren
+  '/_authenticated/setup': typeof AuthenticatedSetupRouteWithChildren
+  '/_authenticated/_app/goals': typeof AuthenticatedAppGoalsRoute
+  '/_authenticated/_app/settings': typeof AuthenticatedAppSettingsRoute
+  '/_authenticated/setup/bills': typeof AuthenticatedSetupBillsRoute
+  '/_authenticated/setup/income': typeof AuthenticatedSetupIncomeRoute
+  '/_authenticated/_app/': typeof AuthenticatedAppIndexRoute
+  '/_authenticated/setup/': typeof AuthenticatedSetupIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/setup'
+    | '/goals'
+    | '/settings'
+    | '/setup/bills'
+    | '/setup/income'
+    | '/setup/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/'
-  id: '__root__' | '/_app' | '/login' | '/signup' | '/_app/'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/goals'
+    | '/settings'
+    | '/setup/bills'
+    | '/setup/income'
+    | '/setup'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/login'
+    | '/signup'
+    | '/_authenticated/_app'
+    | '/_authenticated/setup'
+    | '/_authenticated/_app/goals'
+    | '/_authenticated/_app/settings'
+    | '/_authenticated/setup/bills'
+    | '/_authenticated/setup/income'
+    | '/_authenticated/_app/'
+    | '/_authenticated/setup/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AppRouteRoute: typeof AppRouteRouteWithChildren
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
 }
@@ -81,37 +171,119 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app': {
-      id: '/_app'
+    '/_authenticated': {
+      id: '/_authenticated'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof AppRouteRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/': {
-      id: '/_app/'
+    '/_authenticated/setup': {
+      id: '/_authenticated/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof AuthenticatedSetupRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/_app': {
+      id: '/_authenticated/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedAppRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/setup/': {
+      id: '/_authenticated/setup/'
+      path: '/'
+      fullPath: '/setup/'
+      preLoaderRoute: typeof AuthenticatedSetupIndexRouteImport
+      parentRoute: typeof AuthenticatedSetupRoute
+    }
+    '/_authenticated/_app/': {
+      id: '/_authenticated/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
+    '/_authenticated/setup/income': {
+      id: '/_authenticated/setup/income'
+      path: '/income'
+      fullPath: '/setup/income'
+      preLoaderRoute: typeof AuthenticatedSetupIncomeRouteImport
+      parentRoute: typeof AuthenticatedSetupRoute
+    }
+    '/_authenticated/setup/bills': {
+      id: '/_authenticated/setup/bills'
+      path: '/bills'
+      fullPath: '/setup/bills'
+      preLoaderRoute: typeof AuthenticatedSetupBillsRouteImport
+      parentRoute: typeof AuthenticatedSetupRoute
+    }
+    '/_authenticated/_app/settings': {
+      id: '/_authenticated/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedAppSettingsRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
+    '/_authenticated/_app/goals': {
+      id: '/_authenticated/_app/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof AuthenticatedAppGoalsRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
     }
   }
 }
 
-interface AppRouteRouteChildren {
-  AppIndexRoute: typeof AppIndexRoute
+interface AuthenticatedAppRouteRouteChildren {
+  AuthenticatedAppGoalsRoute: typeof AuthenticatedAppGoalsRoute
+  AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
-const AppRouteRouteChildren: AppRouteRouteChildren = {
-  AppIndexRoute: AppIndexRoute,
+const AuthenticatedAppRouteRouteChildren: AuthenticatedAppRouteRouteChildren = {
+  AuthenticatedAppGoalsRoute: AuthenticatedAppGoalsRoute,
+  AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
 }
 
-const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
-  AppRouteRouteChildren,
-)
+const AuthenticatedAppRouteRouteWithChildren =
+  AuthenticatedAppRouteRoute._addFileChildren(
+    AuthenticatedAppRouteRouteChildren,
+  )
+
+interface AuthenticatedSetupRouteChildren {
+  AuthenticatedSetupBillsRoute: typeof AuthenticatedSetupBillsRoute
+  AuthenticatedSetupIncomeRoute: typeof AuthenticatedSetupIncomeRoute
+  AuthenticatedSetupIndexRoute: typeof AuthenticatedSetupIndexRoute
+}
+
+const AuthenticatedSetupRouteChildren: AuthenticatedSetupRouteChildren = {
+  AuthenticatedSetupBillsRoute: AuthenticatedSetupBillsRoute,
+  AuthenticatedSetupIncomeRoute: AuthenticatedSetupIncomeRoute,
+  AuthenticatedSetupIndexRoute: AuthenticatedSetupIndexRoute,
+}
+
+const AuthenticatedSetupRouteWithChildren =
+  AuthenticatedSetupRoute._addFileChildren(AuthenticatedSetupRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRouteRoute: typeof AuthenticatedAppRouteRouteWithChildren
+  AuthenticatedSetupRoute: typeof AuthenticatedSetupRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRouteRoute: AuthenticatedAppRouteRouteWithChildren,
+  AuthenticatedSetupRoute: AuthenticatedSetupRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  AppRouteRoute: AppRouteRouteWithChildren,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
 }

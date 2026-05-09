@@ -1,11 +1,13 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_app')({ component: RouteComponent });
+export const Route = createFileRoute('/_authenticated/setup')({
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   return (
     <div>
-      {/* app nav */}
+      <h1>setup.tsx</h1>
       <Outlet />
     </div>
   );
