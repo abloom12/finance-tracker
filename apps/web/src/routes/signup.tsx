@@ -13,10 +13,10 @@ export const Route = createFileRoute('/signup')({ component: RouteComponent });
 
 function RouteComponent() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Creat an account</CardTitle>
+          <CardTitle>Create an account</CardTitle>
           <CardDescription>
             Enter your information below to create your account.
           </CardDescription>

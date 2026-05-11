@@ -7,7 +7,7 @@ export const Route = createFileRoute('/login')({ component: RouteComponent });
 
 function RouteComponent() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Welcome Back</CardTitle>

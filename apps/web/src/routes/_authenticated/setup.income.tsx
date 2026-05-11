@@ -5,5 +5,5 @@ export const Route = createFileRoute('/_authenticated/setup/income')({
 });
 
 function RouteComponent() {
-  return <div>setup.income.tsx</div>;
+  return <div>_authenticated/setup.income.tsx</div>;
 }

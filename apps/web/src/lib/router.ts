@@ -10,7 +10,7 @@ export type RouterContext = {
     session: Session | null;
     user: User | null;
     isPending: boolean;
-    refetchSession: () => void | Promise<unknown>;
+    refetchSession: () => void | Promise<void>;
   };
   queryClient: typeof queryClient;
   trpc: typeof trpc;
