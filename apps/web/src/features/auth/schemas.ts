@@ -3,26 +3,12 @@ import { z } from 'zod';
 const passwordSchema = z
   .string()
   .min(1, 'Password is required')
-  .refine(
-    (password) => {
-      if (!password) return true;
-
-      const lengthOk = password.length >= 8 && password.length <= 128;
-      const noSpaces = /^\S+$/.test(password);
-      const hasUpper = /[A-Z]/.test(password);
-      const hasLower = /[a-z]/.test(password);
-      const hasNumber = /[0-9]/.test(password);
-      const hasSpecial = /[^A-Za-z0-9]/.test(password);
-
-      return (
-        lengthOk && noSpaces && hasUpper && hasLower && hasNumber && hasSpecial
-      );
-    },
-    {
-      message:
-        'Password must be at least 8 characters, include upper and lower case letters, a number, a special character, and contain no spaces.',
-    },
-  );
+  .superRefine((password, ctx) => {
+    if (!password) {
+      ctx.addIssue({ code: 'custom', message: 'Password is required.' });
+      return;
+    }
+  });
 
 export const signupSchema = z
   .object({

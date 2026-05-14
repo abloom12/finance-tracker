@@ -11,15 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AuthenticatedSetupRouteImport } from './routes/_authenticated/setup'
-import { Route as AuthenticatedAppRouteRouteImport } from './routes/_authenticated/_app/route'
-import { Route as AuthenticatedSetupIndexRouteImport } from './routes/_authenticated/setup.index'
-import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/_app/index'
-import { Route as AuthenticatedSetupIncomeRouteImport } from './routes/_authenticated/setup.income'
-import { Route as AuthenticatedSetupBillsRouteImport } from './routes/_authenticated/setup.bills'
-import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/_app/settings'
-import { Route as AuthenticatedAppGoalsRouteImport } from './routes/_authenticated/_app/goals'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -31,126 +25,52 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSetupRoute = AuthenticatedSetupRouteImport.update({
-  id: '/setup',
-  path: '/setup',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAppRouteRoute = AuthenticatedAppRouteRouteImport.update({
-  id: '/_app',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedSetupIndexRoute = AuthenticatedSetupIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedSetupRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedAppRouteRoute,
-} as any)
-const AuthenticatedSetupIncomeRoute =
-  AuthenticatedSetupIncomeRouteImport.update({
-    id: '/income',
-    path: '/income',
-    getParentRoute: () => AuthenticatedSetupRoute,
-  } as any)
-const AuthenticatedSetupBillsRoute = AuthenticatedSetupBillsRouteImport.update({
-  id: '/bills',
-  path: '/bills',
-  getParentRoute: () => AuthenticatedSetupRoute,
-} as any)
-const AuthenticatedAppSettingsRoute =
-  AuthenticatedAppSettingsRouteImport.update({
-    id: '/settings',
-    path: '/settings',
-    getParentRoute: () => AuthenticatedAppRouteRoute,
-  } as any)
-const AuthenticatedAppGoalsRoute = AuthenticatedAppGoalsRouteImport.update({
-  id: '/goals',
-  path: '/goals',
-  getParentRoute: () => AuthenticatedAppRouteRoute,
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedAppIndexRoute
+  '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/setup': typeof AuthenticatedSetupRouteWithChildren
-  '/goals': typeof AuthenticatedAppGoalsRoute
-  '/settings': typeof AuthenticatedAppSettingsRoute
-  '/setup/bills': typeof AuthenticatedSetupBillsRoute
-  '/setup/income': typeof AuthenticatedSetupIncomeRoute
-  '/setup/': typeof AuthenticatedSetupIndexRoute
+  '/settings': typeof AppSettingsRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof AuthenticatedAppIndexRoute
+  '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/goals': typeof AuthenticatedAppGoalsRoute
-  '/settings': typeof AuthenticatedAppSettingsRoute
-  '/setup/bills': typeof AuthenticatedSetupBillsRoute
-  '/setup/income': typeof AuthenticatedSetupIncomeRoute
-  '/setup': typeof AuthenticatedSetupIndexRoute
+  '/settings': typeof AppSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/': typeof IndexRoute
+  '/_app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/_authenticated/_app': typeof AuthenticatedAppRouteRouteWithChildren
-  '/_authenticated/setup': typeof AuthenticatedSetupRouteWithChildren
-  '/_authenticated/_app/goals': typeof AuthenticatedAppGoalsRoute
-  '/_authenticated/_app/settings': typeof AuthenticatedAppSettingsRoute
-  '/_authenticated/setup/bills': typeof AuthenticatedSetupBillsRoute
-  '/_authenticated/setup/income': typeof AuthenticatedSetupIncomeRoute
-  '/_authenticated/_app/': typeof AuthenticatedAppIndexRoute
-  '/_authenticated/setup/': typeof AuthenticatedSetupIndexRoute
+  '/_app/settings': typeof AppSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/login'
-    | '/signup'
-    | '/setup'
-    | '/goals'
-    | '/settings'
-    | '/setup/bills'
-    | '/setup/income'
-    | '/setup/'
+  fullPaths: '/' | '/login' | '/signup' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/login'
-    | '/signup'
-    | '/goals'
-    | '/settings'
-    | '/setup/bills'
-    | '/setup/income'
-    | '/setup'
-  id:
-    | '__root__'
-    | '/_authenticated'
-    | '/login'
-    | '/signup'
-    | '/_authenticated/_app'
-    | '/_authenticated/setup'
-    | '/_authenticated/_app/goals'
-    | '/_authenticated/_app/settings'
-    | '/_authenticated/setup/bills'
-    | '/_authenticated/setup/income'
-    | '/_authenticated/_app/'
-    | '/_authenticated/setup/'
+  to: '/' | '/login' | '/signup' | '/settings'
+  id: '__root__' | '/' | '/_app' | '/login' | '/signup' | '/_app/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  IndexRoute: typeof IndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
 }
@@ -171,119 +91,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
+    '/_app': {
+      id: '/_app'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/setup': {
-      id: '/_authenticated/setup'
-      path: '/setup'
-      fullPath: '/setup'
-      preLoaderRoute: typeof AuthenticatedSetupRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/_app': {
-      id: '/_authenticated/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedAppRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/setup/': {
-      id: '/_authenticated/setup/'
-      path: '/'
-      fullPath: '/setup/'
-      preLoaderRoute: typeof AuthenticatedSetupIndexRouteImport
-      parentRoute: typeof AuthenticatedSetupRoute
-    }
-    '/_authenticated/_app/': {
-      id: '/_authenticated/_app/'
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
-      parentRoute: typeof AuthenticatedAppRouteRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/setup/income': {
-      id: '/_authenticated/setup/income'
-      path: '/income'
-      fullPath: '/setup/income'
-      preLoaderRoute: typeof AuthenticatedSetupIncomeRouteImport
-      parentRoute: typeof AuthenticatedSetupRoute
-    }
-    '/_authenticated/setup/bills': {
-      id: '/_authenticated/setup/bills'
-      path: '/bills'
-      fullPath: '/setup/bills'
-      preLoaderRoute: typeof AuthenticatedSetupBillsRouteImport
-      parentRoute: typeof AuthenticatedSetupRoute
-    }
-    '/_authenticated/_app/settings': {
-      id: '/_authenticated/_app/settings'
+    '/_app/settings': {
+      id: '/_app/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedAppSettingsRouteImport
-      parentRoute: typeof AuthenticatedAppRouteRoute
-    }
-    '/_authenticated/_app/goals': {
-      id: '/_authenticated/_app/goals'
-      path: '/goals'
-      fullPath: '/goals'
-      preLoaderRoute: typeof AuthenticatedAppGoalsRouteImport
-      parentRoute: typeof AuthenticatedAppRouteRoute
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRouteRoute
     }
   }
 }
 
-interface AuthenticatedAppRouteRouteChildren {
-  AuthenticatedAppGoalsRoute: typeof AuthenticatedAppGoalsRoute
-  AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
-  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+interface AppRouteRouteChildren {
+  AppSettingsRoute: typeof AppSettingsRoute
 }
 
-const AuthenticatedAppRouteRouteChildren: AuthenticatedAppRouteRouteChildren = {
-  AuthenticatedAppGoalsRoute: AuthenticatedAppGoalsRoute,
-  AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
-  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppSettingsRoute: AppSettingsRoute,
 }
 
-const AuthenticatedAppRouteRouteWithChildren =
-  AuthenticatedAppRouteRoute._addFileChildren(
-    AuthenticatedAppRouteRouteChildren,
-  )
-
-interface AuthenticatedSetupRouteChildren {
-  AuthenticatedSetupBillsRoute: typeof AuthenticatedSetupBillsRoute
-  AuthenticatedSetupIncomeRoute: typeof AuthenticatedSetupIncomeRoute
-  AuthenticatedSetupIndexRoute: typeof AuthenticatedSetupIndexRoute
-}
-
-const AuthenticatedSetupRouteChildren: AuthenticatedSetupRouteChildren = {
-  AuthenticatedSetupBillsRoute: AuthenticatedSetupBillsRoute,
-  AuthenticatedSetupIncomeRoute: AuthenticatedSetupIncomeRoute,
-  AuthenticatedSetupIndexRoute: AuthenticatedSetupIndexRoute,
-}
-
-const AuthenticatedSetupRouteWithChildren =
-  AuthenticatedSetupRoute._addFileChildren(AuthenticatedSetupRouteChildren)
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAppRouteRoute: typeof AuthenticatedAppRouteRouteWithChildren
-  AuthenticatedSetupRoute: typeof AuthenticatedSetupRouteWithChildren
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAppRouteRoute: AuthenticatedAppRouteRouteWithChildren,
-  AuthenticatedSetupRoute: AuthenticatedSetupRouteWithChildren,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  IndexRoute: IndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
 }
