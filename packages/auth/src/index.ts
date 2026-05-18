@@ -36,11 +36,28 @@ export function createAuth(db: AuthDb, options: AuthOptions): AuthInstance {
     database: drizzleAdapter(db, { provider: 'pg' }),
     emailAndPassword: {
       enabled: true,
-      minPasswordLength: 8,
+      minPasswordLength: 12,
       maxPasswordLength: 128,
       requireEmailVerification: false, // turn on once emailVerification is setup
+      revokeSessionsOnPasswordReset: true,
+      customSyntheticUser: ({ coreFields, additionalFields, id }) => ({
+        ...coreFields,
+        // add plugin fields here
+        // Admin plugin fields (in schema order)
+        role: 'user', // or your configured defaultRole
+        banned: false,
+        banReason: null,
+        banExpires: null,
+        // Two Factor plugin
+        twoFactorEnabled: false,
+        ...additionalFields,
+        id,
+      }),
+      onExistingUserSignUp: async (_data, _request) => {},
+      sendResetPassword: async (_data, _request) => {},
+      onPasswordReset: async (_data, _request) => {},
     },
-    emailVerification: {},
+    emailVerification: { sendVerificationEmail: async () => {} },
     socialProviders: {
       google: {
         prompt: 'select_account',

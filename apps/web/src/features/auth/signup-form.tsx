@@ -21,10 +21,11 @@ export function SignupForm() {
 
       try {
         await authClient.signUp.email(
-          { ...reqBody, callbackURL: '/' },
+          { ...reqBody },
           {
             onSuccess: () => {
               toast.success('yay!');
+              //TODO: redirect user
             },
             onError: () => {
               // {
