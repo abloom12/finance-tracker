@@ -1,8 +1,0 @@
-{
-  "extends": "@acme/tsconfig/library.json",
-  "compilerOptions": {
-    "rootDir": "${configDir}/src",
-    "types": ["@total-typescript/ts-reset"]
-  },
-  "include": ["src"]
-}

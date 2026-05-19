@@ -8,9 +8,9 @@ import { fromNodeHeaders } from 'better-auth/node';
 
 import type { AppRouter } from '@acme/api';
 import { createApi } from '@acme/api';
+import { createAuth } from '@acme/auth';
 import { createDB } from '@acme/db';
 
-import { createAuth } from './auth.js';
 import { config } from './env.js';
 
 type TrpcOptions = FastifyTRPCPluginOptions<AppRouter>['trpcOptions'];
@@ -18,7 +18,14 @@ type TrpcOnError = Parameters<NonNullable<TrpcOptions['onError']>>[0];
 
 export const app: FastifyPluginAsync = async (server) => {
   const db = createDB(config.database.url);
-  const auth = createAuth(db);
+  const auth = createAuth(db, {
+    appOrigin: config.appOrigin,
+    baseURL: config.auth.baseUrl,
+    googleClientId: config.auth.googleClientId,
+    googleClientSecret: config.auth.googleClientSecret,
+    isProd: config.isProd,
+    polarAccessToken: '',
+  });
   const { appRouter, createContext } = createApi(auth);
 
   await server.register(fastifyCors, {
