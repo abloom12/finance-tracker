@@ -38,7 +38,7 @@ export function createAuth(db: AuthDb, options: AuthOptions): AuthInstance {
       enabled: true,
       minPasswordLength: 12,
       maxPasswordLength: 128,
-      requireEmailVerification: false, // turn on once emailVerification is setup
+      requireEmailVerification: false, // turn on once we get postmark setup
       revokeSessionsOnPasswordReset: true,
       customSyntheticUser: ({ coreFields, additionalFields, id }) => ({
         ...coreFields,
@@ -53,11 +53,11 @@ export function createAuth(db: AuthDb, options: AuthOptions): AuthInstance {
         ...additionalFields,
         id,
       }),
-      onExistingUserSignUp: async (_data, _request) => {},
-      sendResetPassword: async (_data, _request) => {},
-      onPasswordReset: async (_data, _request) => {},
+      // onExistingUserSignUp: async (_data, _request) => {}, // turn on with requireEmailVerification
+      // sendResetPassword: async (_data, _request) => {}, // turn on with requireEmailVerification
+      // onPasswordReset: async (_data, _request) => {}, // turn on with requireEmailVerification
     },
-    emailVerification: { sendVerificationEmail: async () => {} },
+    // emailVerification: { sendVerificationEmail: async () => {} }, // turn on with requireEmailVerification
     socialProviders: {
       google: {
         prompt: 'select_account',

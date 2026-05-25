@@ -1,9 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoginForm } from '@/features/auth/login-form';
 
-export const Route = createFileRoute('/login')({ component: RouteComponent });
+export const Route = createFileRoute('/login')({
+  beforeLoad: () => {},
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   return (

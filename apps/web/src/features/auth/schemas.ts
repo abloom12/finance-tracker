@@ -1,18 +1,15 @@
 import { z } from 'zod';
 
-const passwordSchema = z
-  .string()
-  .min(1, 'Password is required')
-  .superRefine((password, ctx) => {
-    if (!password) {
-      ctx.addIssue({ code: 'custom', message: 'Password is required.' });
-      return;
-    }
-  });
+const passwordSchema = z.string().superRefine((password, ctx) => {
+  if (!password) {
+    ctx.addIssue({ code: 'custom', message: 'Password is required.' });
+    return;
+  }
+});
 
 export const signupSchema = z
   .object({
-    name: z.string().min(1, 'Name is required'),
+    name: z.string().trim().min(1, 'Name is required'),
     email: z
       .string()
       .trim()
@@ -35,7 +32,7 @@ export const signupSchema = z
 
 export const loginSchema = z.object({
   email: z.email(),
-  password: z.string().min(8).max(128),
+  password: z.string().min(12).max(128),
   rememberMe: z.boolean().optional(),
 });
 

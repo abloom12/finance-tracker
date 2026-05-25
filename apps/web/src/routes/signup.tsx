@@ -1,4 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { z } from 'zod';
 
 import {
   Card,
@@ -9,9 +10,28 @@ import {
 } from '@/components/ui/card';
 import { SignupForm } from '@/features/auth/signup-form';
 
-export const Route = createFileRoute('/signup')({ component: RouteComponent });
+export const Route = createFileRoute('/signup')({
+  beforeLoad: () => {},
+  component: SignupPage,
+  validateSearch: z.object({ redirect: z.string().optional() }),
+});
 
-function RouteComponent() {
+function SignupPage() {
+  const router = useRouter();
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const { auth } = Route.useRouteContext();
+
+  const handleSignUpSuccess = async () => {
+    await auth.refetchSession();
+    await router.invalidate();
+
+    if (search.redirect) {
+      router.history.push(search.redirect);
+      return;
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center">
       <Card className="w-full max-w-sm">
@@ -22,7 +42,7 @@ function RouteComponent() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <SignupForm />
+          <SignupForm onSuccess={handleSignUpSuccess} />
         </CardContent>
       </Card>
     </div>

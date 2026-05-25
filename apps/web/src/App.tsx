@@ -11,6 +11,8 @@ import { router } from './lib/router.ts';
 export function App() {
   const { data, isPending, refetch } = authClient.useSession();
 
+  // const isAuthenticated = !isPending && !!data?.user && !!data?.session;
+
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider

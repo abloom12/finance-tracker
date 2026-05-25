@@ -6,7 +6,9 @@ import { useAppForm } from '@/lib/form';
 import type { SignupSchema } from './schemas';
 import { signupSchema } from './schemas';
 
-export function SignupForm() {
+type SignUpFormProps = { onSuccess: () => void | Promise<void> };
+
+export function SignupForm({ onSuccess }: SignUpFormProps) {
   const form = useAppForm({
     defaultValues: {
       name: '',
@@ -16,31 +18,18 @@ export function SignupForm() {
     } as SignupSchema,
     validators: { onChange: signupSchema },
     onSubmit: async ({ value }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { confirm, ...reqBody } = value;
+      const { data, error } = await authClient.signUp.email({
+        name: value.name,
+        email: value.email,
+        password: value.password,
+      });
 
-      try {
-        await authClient.signUp.email(
-          { ...reqBody },
-          {
-            onSuccess: () => {
-              toast.success('yay!');
-              //TODO: redirect user
-            },
-            onError: () => {
-              // {
-              //   "code": "PASSWORD_COMPROMISED",
-              //   "message": "The password you entered has been compromised. Please choose a different password."
-              // }
-              toast.error('uh oh');
-            },
-          },
-        );
-      } catch (error) {
-        toast.error(
-          'There was an issue with the server, please try again later.',
-        );
+      if (error) {
+        toast.error(error.message);
+        return;
       }
+
+      await onSuccess();
     },
   });
 
