@@ -7,17 +7,19 @@ apps
   ├─ web
   │   ├─ React 19
   │   ├─ Tanstack Router and Query
-  │   ├─ Typesafe API calls using tRPC
+  │   ├─ Tanstack Form and Table
+  │   ├─ tRPC client
   │   └─ Tailwind CSS v4
   └─ server
       ├─ Fastify v5
-      ├─ Typesafe API calls using tRPC
-      └─ Authentication with Better Auth
+      └─ tRPC server
 packages
   ├─ api
   │   └─ tRPC v11 router definition
+  ├─ auth
+  │   └─ Better Auth
   ├─ db
-  │   └─ Typesafe db calls using Drizzle & PostresQL
+  │   └─ Drizzle & PostresQL
   └─ ui
       └─ Base UI components (right now these live in web)
 tooling
