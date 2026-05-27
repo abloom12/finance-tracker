@@ -1,6 +1,7 @@
 {
   "name": "finance-tracker",
   "private": true,
+  "version": "1.0.0",
   "engines": {
     "node": "24.15.0",
     "pnpm": "10.33.0"
