@@ -11,6 +11,7 @@ export type RouterContext = {
     user: User | null;
     isPending: boolean;
     refetchSession: () => void | Promise<void>;
+    isAuthenticated: boolean;
   };
   queryClient: typeof queryClient;
   trpc: typeof trpc;
@@ -25,6 +26,7 @@ export const router = createRouter({
       user: null,
       isPending: true,
       refetchSession: () => {},
+      isAuthenticated: false,
     },
     queryClient,
     trpc,
