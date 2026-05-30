@@ -1,7 +1,9 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
+import { SocialAuthButton } from '@/components/google-button';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -10,6 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Field, FieldGroup } from '@/components/ui/field';
+import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
 import { useAppForm } from '@/lib/form';
 
@@ -54,6 +57,8 @@ function RouteComponent() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
   const { auth } = Route.useRouteContext();
+
+  const onFormsubmit = async () => {};
 
   const form = useAppForm({
     defaultValues: {
@@ -100,6 +105,7 @@ function RouteComponent() {
         </CardHeader>
         <CardContent>
           <form
+            className="mb-4"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -135,6 +141,21 @@ function RouteComponent() {
               </form.AppForm>
             </FieldGroup>
           </form>
+
+          <Separator className="mb-4" />
+
+          <SocialAuthButton
+            provider="google"
+            onClick={() => {}}
+            className="mb-4"
+          />
+
+          <div className="flex items-center justify-center">
+            <p>Already have an account?</p>
+            <Button asChild variant="link">
+              <Link to={'/login'}>Login</Link>
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

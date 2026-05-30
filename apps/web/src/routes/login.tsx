@@ -4,14 +4,7 @@ import { z } from 'zod';
 
 import { SocialAuthButton } from '@/components/google-button';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
@@ -86,11 +79,6 @@ function RouteComponent() {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Welcome Back</CardTitle>
-          {/*<CardAction>
-            <Button asChild variant="link">
-              <Link to={'/signup'}>Sign Up</Link>
-            </Button>
-          </CardAction>*/}
         </CardHeader>
         <CardContent>
           <form
@@ -121,20 +109,19 @@ function RouteComponent() {
 
           <Separator className="mb-4" />
 
-          {/*<p className="flex items-center justify-center py-3">or</p>*/}
-
           <SocialAuthButton
             provider="google"
             onClick={() => handleSocialLogin('google')}
+            className="mb-4"
           />
-        </CardContent>
 
-        <div className="flex items-center justify-center">
-          <p>Don't have an account?</p>
-          <Button asChild variant="link">
-            <Link to={'/signup'}>Sign Up</Link>
-          </Button>
-        </div>
+          <div className="flex items-center justify-center">
+            <p>Don't have an account?</p>
+            <Button asChild variant="link">
+              <Link to={'/signup'}>Sign Up</Link>
+            </Button>
+          </div>
+        </CardContent>
       </Card>
     </div>
   );
