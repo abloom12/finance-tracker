@@ -43,7 +43,7 @@ async function main() {
   try {
     const address = await server.listen({
       port: config.port,
-      host: '127.0.0.1',
+      host: config.host,
     });
 
     server.log.info(`server listening on ${address}`);
