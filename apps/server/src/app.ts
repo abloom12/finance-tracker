@@ -21,6 +21,7 @@ export const app: FastifyPluginAsync = async (server) => {
   const auth = createAuth(db, {
     appOrigin: config.appOrigin,
     baseURL: config.auth.baseUrl,
+    secret: config.auth.secret,
     googleClientId: config.auth.googleClientId,
     googleClientSecret: config.auth.googleClientSecret,
     isProd: config.isProd,
@@ -58,7 +59,7 @@ export const app: FastifyPluginAsync = async (server) => {
     handler: async (request, reply) => {
       try {
         // Construct request URL
-        const url = new URL(request.url, config.auth.baseUrl!);
+        const url = new URL(request.url, config.auth.baseUrl);
 
         // Create Fetch API-compatible request
         const req = new Request(url.toString(), {
@@ -72,10 +73,14 @@ export const app: FastifyPluginAsync = async (server) => {
 
         // Forward response to client
         reply.status(response.status);
-        response.headers.forEach((value, key) => reply.header(key, value));
+        response.headers.forEach((value, key) => {
+          reply.header(key, value);
+        });
         return reply.send(response.body ? await response.text() : null);
       } catch (error) {
-        server.log.error(`Authentication Error: ${error}`);
+        server.log.error(
+          `Authentication Error: ${error instanceof Error ? error.message : String(error)}`,
+        );
 
         return reply
           .status(500)
