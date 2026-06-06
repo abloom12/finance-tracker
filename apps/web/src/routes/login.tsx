@@ -1,8 +1,8 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { SocialAuthButton } from '@/components/google-button';
+import { SocialAuthButton } from '@/components/social-auth-button';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldGroup } from '@/components/ui/field';
@@ -13,7 +13,6 @@ import { useAppForm } from '@/lib/form';
 export const Route = createFileRoute('/login')({
   beforeLoad: () => {},
   component: RouteComponent,
-  validateSearch: z.object({ redirect: z.string().optional() }),
 });
 
 const loginSchema = z.object({
@@ -25,44 +24,8 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 function RouteComponent() {
-  const router = useRouter();
-  const search = Route.useSearch();
-  const navigate = Route.useNavigate();
-  const { auth } = Route.useRouteContext();
-
-  const handleLoginSuccess = async (
-    error: { message?: string } | null | undefined,
-  ) => {
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-
-    await auth.refetchSession();
-    await router.invalidate();
-
-    if (search.redirect) {
-      router.history.push(search.redirect);
-      return;
-    }
-
-    await navigate({ to: '/settings' });
-  };
-
-  const handleSocialLogin = async (provider: 'google' | 'apple') => {
-    const { error } = await authClient.signIn.social({ provider });
-
-    handleLoginSuccess(error);
-  };
-
-  const handleEmailLogin = async ({ value }: { value: LoginSchema }) => {
-    const { error } = await authClient.signIn.email({
-      email: value.email,
-      password: value.password,
-    });
-
-    handleLoginSuccess(error);
-  };
+  const navigate = useNavigate({ from: '/' });
+  // const { isPending } = authClient.useSession();
 
   const form = useAppForm({
     defaultValues: {
@@ -70,8 +33,21 @@ function RouteComponent() {
       password: '',
       rememberMe: false,
     } as LoginSchema,
+    onSubmit: async ({ value }) => {
+      const { error } = await authClient.signIn.email({
+        email: value.email,
+        password: value.password,
+      });
+
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      navigate({ to: '/forecast' });
+      toast.success('Sign in successful');
+    },
     validators: { onChange: loginSchema },
-    onSubmit: handleEmailLogin,
   });
 
   return (
@@ -111,7 +87,7 @@ function RouteComponent() {
 
           <SocialAuthButton
             provider="google"
-            onClick={() => handleSocialLogin('google')}
+            onClick={() => {}}
             className="mb-4"
           />
 

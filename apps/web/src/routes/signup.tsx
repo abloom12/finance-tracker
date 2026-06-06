@@ -1,8 +1,8 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { SocialAuthButton } from '@/components/google-button';
+import { SocialAuthButton } from '@/components/social-auth-button';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -53,12 +53,8 @@ const signupSchema = z
 type SignupSchema = z.infer<typeof signupSchema>;
 
 function RouteComponent() {
-  const router = useRouter();
-  const search = Route.useSearch();
-  const navigate = Route.useNavigate();
-  const { auth } = Route.useRouteContext();
-
-  const onFormsubmit = async () => {};
+  const navigate = useNavigate({ from: '/' });
+  // const { isPending } = authClient.useSession();
 
   const form = useAppForm({
     defaultValues: {
@@ -80,17 +76,8 @@ function RouteComponent() {
         return;
       }
 
-      //? idk about the below, might be different since we do email verification
-
-      await auth.refetchSession();
-      await router.invalidate();
-
-      if (search.redirect) {
-        router.history.push(search.redirect);
-        return;
-      }
-
-      await navigate({ to: '/settings' });
+      navigate({ to: '/forecast' });
+      toast.success('Sign in successful');
     },
   });
 
