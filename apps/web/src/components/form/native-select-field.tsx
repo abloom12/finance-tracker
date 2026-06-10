@@ -2,30 +2,20 @@ import { useStore } from '@tanstack/react-form';
 
 import { useFieldContext } from '@/lib/form';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
+import { NativeSelect, NativeSelectOption } from '../ui/native-select';
 
 type SelectFieldProps = {
   label: string;
   options: Array<{ value: string; label: string }>;
-  groupLabel?: string;
   placeholder?: string;
   description?: string;
 };
 
-export function SelectField({
+export function NativeSelectField({
   label,
   options,
   placeholder,
   description,
-  groupLabel,
 }: SelectFieldProps) {
   const field = useFieldContext<string>();
 
@@ -42,33 +32,28 @@ export function SelectField({
   return (
     <Field>
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-      <Select
+      <NativeSelect
+        id={field.name}
         value={field.state.value}
-        name={field.name}
         aria-invalid={hasErrors}
         aria-describedby={describedBy}
-        onValueChange={(value) => field.handleChange(value)}
+        onChange={(e) => field.handleChange(e.target.value)}
+        onBlur={field.handleBlur}
       >
-        <SelectTrigger className="w-full max-w-48">
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>{groupLabel}</SelectLabel>
-            {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-
+        {placeholder && (
+          <NativeSelectOption value="" aria-hidden="true" disabled>
+            {placeholder}
+          </NativeSelectOption>
+        )}
+        {options.map((option) => (
+          <NativeSelectOption key={option.value} value={option.value}>
+            {option.label}
+          </NativeSelectOption>
+        ))}
+      </NativeSelect>
       {description && (
         <FieldDescription id={descriptionId}>{description}</FieldDescription>
       )}
-
       <FieldError id={errorId} errors={isTouched ? errors : undefined} />
     </Field>
   );

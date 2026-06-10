@@ -6,7 +6,7 @@ import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';
 
 type CheckboxFieldProps = { label: string; description?: string };
 
-function CheckboxField({ label, description }: CheckboxFieldProps) {
+export function CheckboxField({ label, description }: CheckboxFieldProps) {
   const field = useFieldContext<boolean>();
 
   const { errors, isTouched } = useStore(field.store, (state) => state.meta);
@@ -37,5 +37,3 @@ function CheckboxField({ label, description }: CheckboxFieldProps) {
     </Field>
   );
 }
-
-export { CheckboxField };

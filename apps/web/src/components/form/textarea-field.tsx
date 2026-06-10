@@ -11,7 +11,7 @@ type TextareaProps = {
   description?: string;
 };
 
-function TextareaField({
+export function TextareaField({
   label,
   placeholder,
   rows,
@@ -49,5 +49,3 @@ function TextareaField({
     </Field>
   );
 }
-
-export { TextareaField };

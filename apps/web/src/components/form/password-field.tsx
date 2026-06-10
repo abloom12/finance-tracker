@@ -11,7 +11,7 @@ import {
   InputGroupInput,
 } from '../ui/input-group';
 
-function PasswordField({
+export function PasswordField({
   label,
   description,
 }: {
@@ -64,5 +64,3 @@ function PasswordField({
     </Field>
   );
 }
-
-export { PasswordField };

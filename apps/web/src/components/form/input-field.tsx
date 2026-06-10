@@ -10,11 +10,12 @@ type InputType =
   | 'password'
   | 'date'
   | 'time'
+  | 'number'
   | 'tel'
   | 'url'
   | 'search';
 
-function InputField({
+export function InputField({
   type = 'text',
   label,
   description,
@@ -53,5 +54,3 @@ function InputField({
     </Field>
   );
 }
-
-export { InputField };

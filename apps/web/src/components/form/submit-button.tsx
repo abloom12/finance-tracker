@@ -2,7 +2,7 @@ import { useFormContext } from '@/lib/form';
 import { Button } from '../ui/button';
 import { Spinner } from '../ui/spinner';
 
-function SubmitButton({
+export function SubmitButton({
   label,
   loadingLabel,
 }: {
@@ -22,5 +22,3 @@ function SubmitButton({
     </form.Subscribe>
   );
 }
-
-export { SubmitButton };
