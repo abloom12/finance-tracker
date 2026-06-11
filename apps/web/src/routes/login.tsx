@@ -18,21 +18,15 @@ export const Route = createFileRoute('/login')({
 const loginSchema = z.object({
   email: z.email(),
   password: z.string().min(12).max(128),
-  rememberMe: z.boolean().optional(),
+  rememberMe: z.boolean(),
 });
-
-type LoginSchema = z.infer<typeof loginSchema>;
 
 function RouteComponent() {
   const navigate = useNavigate({ from: '/' });
   // const { isPending } = authClient.useSession();
 
   const form = useAppForm({
-    defaultValues: {
-      email: '',
-      password: '',
-      rememberMe: false,
-    } as LoginSchema,
+    defaultValues: { email: '', password: '', rememberMe: false },
     onSubmit: async ({ value }) => {
       const { error } = await authClient.signIn.email({
         email: value.email,
