@@ -6,7 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { IncomeForm } from './income-form';
 
 export function ExpectedIncomeCard() {
@@ -23,7 +29,9 @@ export function ExpectedIncomeCard() {
           <DialogTrigger asChild>
             <Button>Add New Income</Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent showCloseButton={false}>
+            <DialogHeader>New Income</DialogHeader>
+            <DialogDescription>Add a new income source below</DialogDescription>
             <IncomeForm />
           </DialogContent>
         </Dialog>
