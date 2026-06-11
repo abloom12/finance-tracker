@@ -1,6 +1,7 @@
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
 import { CheckboxField } from '@/components/form/checkbox-field';
+import { CurrencyField } from '@/components/form/currency-field';
 import { InputField } from '@/components/form/input-field';
 import { NativeSelectField } from '@/components/form/native-select-field';
 import { PasswordField } from '@/components/form/password-field';
@@ -19,6 +20,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     SelectField,
     NativeSelectField,
     TextareaField,
+    CurrencyField,
   },
   formComponents: { SubmitButton },
   fieldContext,
