@@ -6,7 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { ExpenseForm } from './expense-form';
 
 export function RecurringExpensesCard() {
   return (
@@ -22,7 +29,11 @@ export function RecurringExpensesCard() {
           <DialogTrigger asChild>
             <Button>Add New Expense</Button>
           </DialogTrigger>
-          <DialogContent></DialogContent>
+          <DialogContent showCloseButton={false}>
+            <DialogHeader>New Expense</DialogHeader>
+            <DialogDescription>Add a new recurring expense</DialogDescription>
+            <ExpenseForm />
+          </DialogContent>
         </Dialog>
       </CardFooter>
     </Card>
